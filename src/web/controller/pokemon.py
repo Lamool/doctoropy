@@ -4,7 +4,7 @@ from operator import index
 import requests
 import pandas as pd
 from pandas.core.interchange.dataframe_protocol import DataFrame
-
+#
 list = []
 for id in range(898,900) :
     url = f"https://pokeapi.co/api/v2/pokemon-species/{id}/"
