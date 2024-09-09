@@ -8,6 +8,7 @@ app = Flask(__name__)
 from flask_cors import CORS
 CORS(app)
 
+# 김민석 커밋
 from controller.controller import *
 
 # 3. 플라스크 웹 실행
