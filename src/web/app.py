@@ -1,5 +1,5 @@
 # 1. 플라스크 모듈 가져오기
-from flask import Flask
+from flask import Flask, request
 
 # 2. 플라스크 객체 생성
 app = Flask(__name__)
