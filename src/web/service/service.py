@@ -23,7 +23,36 @@ rate_dict = {}
 # n2 = int(input("B포켓몬 번호 입력"))
 # m2 = int(input("B포켓몬 사용 스킬 번호 입력"))
 
+def poke_info_num() :
+    poke_data = pd.read_csv("./service/datapokemon.csv", encoding="utf-8", index_col=0)
+    poke_data_all_info = poke_data[["한글이름","영어이름"]]
+    poke_data_json_loads = poke_data_all_info.to_json(orient='records', force_ascii=False)
+    return poke_data_json_loads
 
+def poke_skill_num() :
+    poke_skill_data = pd.read_csv("./service/skilldata.csv", encoding="utf-8", index_col=0)
+    new_poke_skill_data = poke_skill_data.fillna(0)
+    poke_skill_data_info = new_poke_skill_data[["스킬이름","타입"]]
+    poke_skill_json_loads = poke_skill_data_info.to_json(orient='records', force_ascii=False)
+    return poke_skill_json_loads
+
+def poke_rate_data_info(n) :
+    poke_data = pd.read_csv("./service/datapokemon.csv", encoding="utf-8", index_col=0)
+    poke_data_one = poke_data.iloc[n]
+    print( poke_data_one  )
+    poke_info_dict = {"이름" : poke_data_one["한글이름"],"체력": int( poke_data_one["체력"] ) , "공격" : int(poke_data_one["공격"]), "방어" : int(poke_data_one["방어"]), "특수공격" : int(poke_data_one["특수공격"]), "특수방어" : int(poke_data_one["특수방어"]), "스피드" : int(poke_data_one["스피드"]), "타입" : poke_data_one["타입"], "이미지" : poke_data_one["이미지"]}
+    print( poke_info_dict )
+
+    return poke_info_dict
+
+
+def poke_rate_skill_info(n) :
+    poke_skill_data = pd.read_csv("./service/skilldata.csv", encoding="utf-8", index_col=0)
+    new_poke_skill_data = poke_skill_data.fillna(0)
+    poke_skill_data_one = new_poke_skill_data.iloc[n]
+    poke_skill_info_dict = {"스킬_이름" : poke_skill_data_one["스킬이름"], "타입" : poke_skill_data_one["타입"]}
+
+    return poke_skill_info_dict
 
 def poke(n1, m1, n2, m2):
     poke_data = pd.read_csv("./service/datapokemon.csv", encoding="utf-8", index_col=0)
@@ -39,6 +68,7 @@ def poke(n1, m1, n2, m2):
     a_pokemon = rate_poke_mon_A(poke_data_one["체력"], poke_data_one["공격"], poke_data_one["방어"], poke_data_one["특수공격"], poke_data_one["특수방어"], poke_data_one["스피드"], poke_data_one["타입"], poke_skill_data_one["데미지"])
     b_pokemon = rate_poke_mon_A(poke_data_two["체력"], poke_data_two["공격"], poke_data_two["방어"], poke_data_two["특수공격"], poke_data_two["특수방어"], poke_data_two["스피드"], poke_data_two["타입"], poke_skill_data_two["데미지"])
     rate_dict = rate_cal(a_pokemon, b_pokemon)
+
     return rate_dict
 
 def rate_cal (a_pokemon, b_pokemon) :
@@ -54,6 +84,8 @@ def rate_cal (a_pokemon, b_pokemon) :
         print("A 스코어가 더 큼")
         ratio_a = (total_score_a / total_score_b)
         rate_a = 50 * ratio_a
+        if ratio_a >= 2 :
+            rate_a = 100
         rate_b = 100 - rate_a
         rate_dict["A_포켓몬_점수"] = total_score_a
         rate_dict["B_포켓몬_점수"] = total_score_b
@@ -63,11 +95,14 @@ def rate_cal (a_pokemon, b_pokemon) :
         print("B 스코어가 더 큼")
         ratio_b = (total_score_b / total_score_a)
         rate_b = 50 * ratio_b
+        if ratio_b >= 2 :
+            rate_b = 100
         rate_a = 100 - rate_b
         rate_dict["A_포켓몬_점수"] = total_score_a
         rate_dict["B_포켓몬_점수"] = total_score_b
         rate_dict["A_포켓몬_승률"] = rate_a
         rate_dict["B_포켓몬_승률"] = rate_b
+
     return rate_dict
 
 
@@ -231,6 +266,7 @@ def type_cal_a(type_a, type_b) :
             type_value_a = 0.5
         else :
             type_value_a = 1
+
     return type_value_a
 
 """
@@ -398,5 +434,6 @@ def type_cal_b(type_a, type_b) :
             type_value_b = 0.5
         else :
             type_value_b = 1
+
     return type_value_b
 
