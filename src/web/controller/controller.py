@@ -38,3 +38,4 @@ def rate_data_all() :
 def rate_skill_all() :
     poke_data_json_loads = poke_skill_num()
     return poke_data_json_loads
+
