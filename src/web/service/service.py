@@ -27,20 +27,22 @@ def poke_info_num() :
     poke_data = pd.read_csv("./service/datapokemon.csv", encoding="utf-8", index_col=0)
     poke_data_all_info = poke_data[["한글이름","영어이름"]]
     poke_data_json_loads = poke_data_all_info.to_json(orient='records', force_ascii=False)
-    return poke_data_json_loads
+    poke_data_result = json.loads(poke_data_json_loads)
+    return poke_data_result
 
 def poke_skill_num() :
     poke_skill_data = pd.read_csv("./service/skilldata.csv", encoding="utf-8", index_col=0)
     new_poke_skill_data = poke_skill_data.fillna(0)
     poke_skill_data_info = new_poke_skill_data[["스킬이름","타입"]]
     poke_skill_json_loads = poke_skill_data_info.to_json(orient='records', force_ascii=False)
-    return poke_skill_json_loads
+    poke_skill_result = json.loads(poke_skill_json_loads)
+    return poke_skill_result
 
 def poke_rate_data_info(n) :
     poke_data = pd.read_csv("./service/datapokemon.csv", encoding="utf-8", index_col=0)
     poke_data_one = poke_data.iloc[n]
     print( poke_data_one  )
-    poke_info_dict = {"이름" : poke_data_one["한글이름"],"체력": int( poke_data_one["체력"] ) , "공격" : int(poke_data_one["공격"]), "방어" : int(poke_data_one["방어"]), "특수공격" : int(poke_data_one["특수공격"]), "특수방어" : int(poke_data_one["특수방어"]), "스피드" : int(poke_data_one["스피드"]), "타입" : poke_data_one["타입"], "이미지" : poke_data_one["이미지"]}
+    poke_info_dict = {"한글이름" : poke_data_one["한글이름"], "영어이름" : poke_data_one["영어이름"], "체력": int( poke_data_one["체력"] ) , "공격" : int(poke_data_one["공격"]), "방어" : int(poke_data_one["방어"]), "특수공격" : int(poke_data_one["특수공격"]), "특수방어" : int(poke_data_one["특수방어"]), "스피드" : int(poke_data_one["스피드"]), "타입" : poke_data_one["타입"], "이미지" : poke_data_one["이미지"]}
     print( poke_info_dict )
 
     return poke_info_dict
@@ -83,25 +85,34 @@ def rate_cal (a_pokemon, b_pokemon) :
     if total_score_a > total_score_b :
         print("A 스코어가 더 큼")
         ratio_a = (total_score_a / total_score_b)
-        rate_a = 50 * ratio_a
+        rate_a = round(50 * ratio_a, 2)
         if ratio_a >= 2 :
             rate_a = 100
         rate_b = 100 - rate_a
-        rate_dict["A_포켓몬_점수"] = total_score_a
-        rate_dict["B_포켓몬_점수"] = total_score_b
+        rate_dict["A_포켓몬_점수"] = round(total_score_a, 2)
+        rate_dict["B_포켓몬_점수"] = round(total_score_b, 2)
         rate_dict["A_포켓몬_승률"] = rate_a
         rate_dict["B_포켓몬_승률"] = rate_b
+        print(rate_a)
+        print(rate_b)
     elif total_score_b > total_score_a:
         print("B 스코어가 더 큼")
         ratio_b = (total_score_b / total_score_a)
-        rate_b = 50 * ratio_b
+        rate_b = round(50 * ratio_b, 2)
         if ratio_b >= 2 :
             rate_b = 100
         rate_a = 100 - rate_b
-        rate_dict["A_포켓몬_점수"] = total_score_a
-        rate_dict["B_포켓몬_점수"] = total_score_b
+        rate_dict["A_포켓몬_점수"] = round(total_score_a, 2)
+        rate_dict["B_포켓몬_점수"] = round(total_score_b, 2)
         rate_dict["A_포켓몬_승률"] = rate_a
         rate_dict["B_포켓몬_승률"] = rate_b
+        print(rate_a)
+        print(rate_b)
+    elif total_score_a == total_score_b :
+        rate_dict["A_포켓몬_점수"] = round(total_score_a, 2)
+        rate_dict["B_포켓몬_점수"] = round(total_score_b, 2)
+        rate_dict["A_포켓몬_승률"] = 50
+        rate_dict["B_포켓몬_승률"] = 50
 
     return rate_dict
 
