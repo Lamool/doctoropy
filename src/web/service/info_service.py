@@ -120,7 +120,7 @@ def type_poke_info(type_eng, page_number) :
     # 페이지에 해당하는 인덱스 리스트 추출
     paged_index_list = get_paged_data(index_list, page_size, page_number)
     # print(paged_index_list)
-
+    ##
     # 페이지에 해당하는 데이터 처리
     poke_type_info_list = []
     for i in paged_index_list:
