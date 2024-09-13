@@ -5,8 +5,6 @@ import json
 from src.web.app import *
 from flask import request
 
-from fontTools.misc.cython import returns
-from joblib.parallel import method
 #
 # df = pd.read_csv("datapokemon.csv", encoding="utf-8")
 # df2 = df[['한글이름','아이디','영어이름','이미지']] #랭킹 전체출력
