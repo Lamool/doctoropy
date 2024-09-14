@@ -36,6 +36,6 @@ def tournament(set_size) :
     select_pokemon = random.sample(df3_list, set_size)
     # print(select_pokemon)
     select_pokemon3 = pd.DataFrame(select_pokemon)
-    jsondata = select_pokemon3.to_json(orient='records', force_ascii=False)
-    result = json.loads(jsondata)
+    jsondata = select_pokemon3.to_json(orient='values', force_ascii=False)
+    # print(jsondata)
     return jsondata
