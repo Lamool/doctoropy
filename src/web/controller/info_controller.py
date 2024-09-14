@@ -19,7 +19,6 @@ def poke_info_detail_print() :
 
 @app.route("/info/type", methods=["GET"])
 def poke_info_type_print():
-    ##
     type = request.args["type"]
     page = request.args["page"]
     df_poke_type_list_all_result = type_poke_info(type, int(page))
