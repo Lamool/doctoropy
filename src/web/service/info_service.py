@@ -4,7 +4,6 @@ import json
 import pandas as pd
 
 
-
 # print(poke_data)
 #
 # print(poke_data.loc[])
@@ -199,18 +198,10 @@ def poke_kr_search(input_kr_name, page_number):
         if pd.isna(kr_name):
             continue  # 결측치인 경우 건너뜁니다.
 
-        if len(input_kr_name) == 1:
-            # 길이가 1인 경우, 이름에 포함된 모든 경우를 반환
-            if input_kr_name in kr_name:
-                results.append({"한글이름": kr_name,
-                                "이미지": poke_data_images.iloc[i],
-                                "영어이름": poke_data_en_name.iloc[i]})
-        else:
-            # 길이가 2 이상인 경우
-            if input_kr_name in kr_name:
-                results.append({"한글이름": kr_name,
-                                "이미지": poke_data_images.iloc[i],
-                                "영어이름": poke_data_en_name.iloc[i]})
+        if input_kr_name in kr_name:
+            results.append({"한글이름": kr_name,
+                            "이미지": poke_data_images.iloc[i],
+                            "영어이름": poke_data_en_name.iloc[i]})
 
     # 페이지 범위 계산
     start_index = (page_number - 1) * items_per_page
@@ -242,18 +233,10 @@ def poke_en_search(input_en_name, page_number):
         if pd.isna(en_name):
             continue  # 결측치인 경우 건너뜁니다.
 
-        if len(input_en_name) == 1:
-            # 길이가 1인 경우, 이름에 포함된 모든 경우를 반환
-            if input_en_name in en_name:
-                results.append({"영어이름": en_name,
-                                "이미지": poke_data_images.iloc[i],
-                                "한글이름": poke_data_kr_name.iloc[i]})
-        else:
-            # 길이가 2 이상인 경우
-            if input_en_name in en_name:
-                results.append({"영어이름": en_name,
-                                "이미지": poke_data_images.iloc[i],
-                                "한글이름": poke_data_kr_name.iloc[i]})
+        if input_en_name in en_name:
+            results.append({"영어이름": en_name,
+                            "이미지": poke_data_images.iloc[i],
+                            "한글이름": poke_data_kr_name.iloc[i]})
 
     # 페이지 범위 계산
     start_index = (page_number - 1) * items_per_page
@@ -307,18 +290,10 @@ def poke_type_kr_search(input_kr_name, type_eng, page_number):
         if pd.isna(kr_name):
             continue  # 결측치인 경우 건너뜁니다.
 
-        if len(input_kr_name) == 1:
-            # 길이가 1인 경우, 이름에 포함된 모든 경우를 반환
-            if input_kr_name in kr_name:
-                results.append({"한글이름": kr_name,
-                                "이미지": poke_data_images.iloc[index_list[i]],
-                                "영어이름": poke_data_en_name.iloc[index_list[i]]})
-        else:
-            # 길이가 2 이상인 경우
-            if input_kr_name in kr_name:
-                results.append({"한글이름": kr_name,
-                                "이미지": poke_data_images.iloc[index_list[i]],
-                                "영어이름": poke_data_en_name.iloc[index_list[i]]})
+        if input_kr_name in kr_name:
+            results.append({"한글이름": kr_name,
+                            "이미지": poke_data_images.iloc[index_list[i]],
+                            "영어이름": poke_data_en_name.iloc[index_list[i]]})
 
     # print(results)
     start_index = (page_number - 1) * items_per_page
@@ -361,18 +336,10 @@ def poke_type_en_search(input_en_name, type_eng, page_number):
         if pd.isna(en_name):
             continue  # 결측치인 경우 건너뜁니다.
 
-        if len(input_en_name) == 1:
-            # 길이가 1인 경우, 이름에 포함된 모든 경우를 반환
-            if input_en_name in en_name:
-                results.append({"영어이름": en_name,
-                                "이미지": poke_data_images.iloc[index_list[i]],
-                                "한글이름": poke_data_kr_name.iloc[index_list[i]]})
-        else:
-            # 길이가 2 이상인 경우
-            if input_en_name in en_name:
-                results.append({"영어이름": en_name,
-                                "이미지": poke_data_images.iloc[index_list[i]],
-                                "한글이름": poke_data_kr_name.iloc[index_list[i]]})
+        if input_en_name in en_name:
+            results.append({"영어이름": en_name,
+                            "이미지": poke_data_images.iloc[index_list[i]],
+                            "한글이름": poke_data_kr_name.iloc[index_list[i]]})
 
     # print(results)
     start_index = (page_number - 1) * items_per_page
