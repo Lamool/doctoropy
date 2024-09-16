@@ -8,10 +8,11 @@ app = Flask(__name__)
 from flask_cors import CORS
 CORS(app)
 
-# 김민석 커밋
+# 모듈 가져오기
 from controller.controller import *
 from src.web.service.rankservice import *
 from src.web.controller.info_controller import *
+from src.web.controller.base_stats_controller import *
 
 # 3. 플라스크 웹 실행
 if __name__ == "__main__":
