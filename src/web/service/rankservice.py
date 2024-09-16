@@ -4,7 +4,7 @@ import pandas as pd
 import json
 from src.web.app import *
 from flask import request
-
+from src.web.app import *
 #
 # df = pd.read_csv("datapokemon.csv", encoding="utf-8")
 # df2 = df[['한글이름','아이디','영어이름','이미지']] #랭킹 전체출력
@@ -36,6 +36,6 @@ def tournament(set_size) :
     select_pokemon = random.sample(df3_list, set_size)
     # print(select_pokemon)
     select_pokemon3 = pd.DataFrame(select_pokemon)
-    jsondata = select_pokemon3.to_json(orient='values', force_ascii=False)
+    jsondata = select_pokemon3.to_json(orient='records', force_ascii=False)
     # print(jsondata)
     return jsondata
