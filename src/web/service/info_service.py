@@ -117,6 +117,7 @@ def type_poke_info(type_eng, page_number) :
     page_size = 100
     print(index_list)
 
+    poke_data['한글이름'] = poke_data['한글이름'].fillna('').astype(str)
     # 페이지에 해당하는 인덱스 리스트 추출
     paged_index_list = get_paged_data(index_list, page_size, page_number)
     # print(paged_index_list)
@@ -127,7 +128,7 @@ def type_poke_info(type_eng, page_number) :
         poke_data_index = poke_data.iloc[i]
         poke_data_index_dict = {
             "이미지": poke_data_index["이미지"],
-            "한글이름": poke_data_index["한글이름"],
+            "한글이름": poke_data_index['한글이름'],
             "영어이름": poke_data_index["영어이름"]
         }
         poke_type_info_list.append(poke_data_index_dict)

@@ -101,12 +101,12 @@ def tournament_64_action(list) :
         select_win = int(input("0 : 왼쪽 선택, 1 : 오른쪽 선택"))
         if select_win == 0 :
             list.pop(m)
-            n += 1
-            m += 1
+            n += 2
+            m += 2
         elif select_win == 1 :
             list.pop(n)
-            n += 1
-            m += 1
+            n += 2
+            m += 2
     print(list)
     print(len(list))
     tournament_32_action(list)
@@ -119,12 +119,12 @@ def tournament_32_action(list) :
         select_win = int(input("0 : 왼쪽 선택, 1 : 오른쪽 선택"))
         if select_win == 0 :
             list.pop(m)
-            n += 1
-            m += 1
+            n += 2
+            m += 2
         elif select_win == 1 :
             list.pop(n)
-            n += 1
-            m += 1
+            n += 2
+            m += 2
     print(list)
     print(len(list))
     tournament_16_action(list)
@@ -137,12 +137,12 @@ def tournament_16_action(list) :
         select_win = int(input("0 : 왼쪽 선택, 1 : 오른쪽 선택"))
         if select_win == 0 :
             list.pop(m)
-            n += 1
-            m += 1
+            n += 2
+            m += 2
         elif select_win == 1 :
             list.pop(n)
-            n += 1
-            m += 1
+            n += 2
+            m += 2
     print(list)
     print(len(list))
     tournament_8_action(list)
@@ -155,12 +155,12 @@ def tournament_8_action(list) :
         select_win = int(input("0 : 왼쪽 선택, 1 : 오른쪽 선택"))
         if select_win == 0 :
             list.pop(m)
-            n += 1
-            m += 1
+            n += 2
+            m += 2
         elif select_win == 1 :
             list.pop(n)
-            n += 1
-            m += 1
+            n += 2
+            m += 2
     print(list)
     print(len(list))
     tournament_4_action(list)
@@ -173,12 +173,12 @@ def tournament_4_action(list) :
         select_win = int(input("0 : 왼쪽 선택, 1 : 오른쪽 선택"))
         if select_win == 0 :
             list.pop(m)
-            n += 1
-            m += 1
+            n += 2
+            m += 2
         elif select_win == 1 :
             list.pop(n)
-            n += 1
-            m += 1
+            n += 2
+            m += 2
     print(list)
     print(len(list))
     tournament_final_action(list)
