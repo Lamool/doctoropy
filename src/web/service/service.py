@@ -91,8 +91,8 @@ def rate_cal (a_pokemon, b_pokemon) :
         rate_b = 100 - rate_a
         rate_dict["A_포켓몬_점수"] = round(total_score_a, 2)
         rate_dict["B_포켓몬_점수"] = round(total_score_b, 2)
-        rate_dict["A_포켓몬_승률"] = rate_a
-        rate_dict["B_포켓몬_승률"] = rate_b
+        rate_dict["A_포켓몬_승률"] = round(rate_a, 2)
+        rate_dict["B_포켓몬_승률"] = round(rate_b, 2)
         print(rate_a)
         print(rate_b)
     elif total_score_b > total_score_a:
@@ -104,8 +104,8 @@ def rate_cal (a_pokemon, b_pokemon) :
         rate_a = 100 - rate_b
         rate_dict["A_포켓몬_점수"] = round(total_score_a, 2)
         rate_dict["B_포켓몬_점수"] = round(total_score_b, 2)
-        rate_dict["A_포켓몬_승률"] = rate_a
-        rate_dict["B_포켓몬_승률"] = rate_b
+        rate_dict["A_포켓몬_승률"] = round(rate_a, 2)
+        rate_dict["B_포켓몬_승률"] = round(rate_b, 2)
         print(rate_a)
         print(rate_b)
     elif total_score_a == total_score_b :
