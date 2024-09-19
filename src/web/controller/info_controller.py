@@ -41,3 +41,26 @@ def poke_en_info_search():
     print(page)
     poke_search_list = poke_en_search(search, int(page))
     return poke_search_list
+
+
+@app.route("/info/type_kr_search", methods=["GET"])
+def poke_type_kr_search():
+    search = request.args["search"]
+    page = request.args["page"]
+    type = request.args["type"]
+    print(search)
+    print(page)
+    print(type)
+    poke_type_search_list = poke_type_kr_info_search(type, search, int(page))
+    return poke_type_search_list
+
+@app.route("/info/type_en_search", methods=["GET"])
+def poke_type_en_search():
+    search = request.args["search"]
+    page = request.args["page"]
+    type = request.args["type"]
+    print(search)
+    print(page)
+    print(type)
+    poke_type_search_list = poke_type_en_info_search(type, search, int(page))
+    return poke_type_search_list
