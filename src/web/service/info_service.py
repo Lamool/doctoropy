@@ -4,6 +4,7 @@ import json
 import pandas as pd
 
 
+
 # print(poke_data)
 #
 # print(poke_data.loc[])
@@ -21,9 +22,7 @@ def poke_all_info_print(page) :
     if page >= 1000 :
         for i1 in range(1000, 1025):
             i_poke_data = poke_data.iloc[i1]
-            i_poke_data_dict = {"이미지": i_poke_data["이미지"],
-                                "한글이름": i_poke_data["한글이름"],
-                                "영어이름": i_poke_data["영어이름"]}
+            i_poke_data_dict = {"이미지": i_poke_data["이미지"], "한글이름": i_poke_data["한글이름"], "영어이름": i_poke_data["영어이름"]}
             list.append(i_poke_data_dict)
             # print(f"시작 번호 : {n}, 끝 번호 : {m}")
             # print(i_poke_data_dict)
@@ -37,9 +36,7 @@ def poke_all_info_print(page) :
     else :
         for i1 in range(n + page , m + page) :  #  0+0  , 100+0  , 0+100 , 100+100
             i_poke_data = poke_data.iloc[i1]
-            i_poke_data_dict = {"이미지" : i_poke_data["이미지"],
-                                "한글이름" : i_poke_data["한글이름"],
-                                "영어이름" : i_poke_data["영어이름"]}
+            i_poke_data_dict = {"이미지" : i_poke_data["이미지"], "한글이름" : i_poke_data["한글이름"], "영어이름" : i_poke_data["영어이름"]}
             list.append(i_poke_data_dict)
             # print(f"시작 번호 : {n}, 끝 번호 : {m}")
             # print(i_poke_data_dict)
@@ -118,8 +115,9 @@ def type_poke_info(type_eng, page_number) :
     # print(index_list)
     # 페이지 크기와 페이지 번호 설정
     page_size = 100
+    print(index_list)
 
-
+    poke_data['한글이름'] = poke_data['한글이름'].fillna('').astype(str)
     # 페이지에 해당하는 인덱스 리스트 추출
     paged_index_list = get_paged_data(index_list, page_size, page_number)
     # print(paged_index_list)
@@ -130,7 +128,7 @@ def type_poke_info(type_eng, page_number) :
         poke_data_index = poke_data.iloc[i]
         poke_data_index_dict = {
             "이미지": poke_data_index["이미지"],
-            "한글이름": poke_data_index["한글이름"],
+            "한글이름": poke_data_index['한글이름'],
             "영어이름": poke_data_index["영어이름"]
         }
         poke_type_info_list.append(poke_data_index_dict)
@@ -197,11 +195,8 @@ def poke_kr_search(input_kr_name, page_number):
     for i, kr_name in enumerate(poke_data_kr_name):
         if pd.isna(kr_name):
             continue  # 결측치인 경우 건너뜁니다.
-
         if input_kr_name in kr_name:
-            results.append({"한글이름": kr_name,
-                            "이미지": poke_data_images.iloc[i],
-                            "영어이름": poke_data_en_name.iloc[i]})
+            results.append({"한글이름": kr_name, "이미지": poke_data_images.iloc[i], "영어이름": poke_data_en_name.iloc[i]})
 
     # 페이지 범위 계산
     start_index = (page_number - 1) * items_per_page
@@ -234,9 +229,7 @@ def poke_en_search(input_en_name, page_number):
             continue  # 결측치인 경우 건너뜁니다.
 
         if input_en_name in en_name:
-            results.append({"영어이름": en_name,
-                            "이미지": poke_data_images.iloc[i],
-                            "한글이름": poke_data_kr_name.iloc[i]})
+            results.append({"영어이름": en_name, "이미지": poke_data_images.iloc[i], "한글이름": poke_data_kr_name.iloc[i]})
 
     # 페이지 범위 계산
     start_index = (page_number - 1) * items_per_page
@@ -245,8 +238,9 @@ def poke_en_search(input_en_name, page_number):
     print(poke_search_results)
     return poke_search_results
 
+
 """
->   타입 분류와 검색 기능 합치기
+3. 타입 분류와 검색 기능 합치기
    먼저 타입 이름이 담긴 리스트를 for문을 돌려서 순회
 -> 인풋으로 받은 타입 이름과 겹치는 것이 있다면
 -> 그 때의 인덱스를 리스트에 append
@@ -257,95 +251,92 @@ def poke_en_search(input_en_name, page_number):
 -> 이름과 이미지를 리스트에 append
 -> 그 후 json 타입으로 변경 후 내보내기
 """
-# type_eng = input("타입 입력 : ")
-# input_kr_name = input("찾고 싶은 포켓몬 : ")
-# page_number = int(input("페이지 번호 : "))
 
-def poke_type_kr_search(input_kr_name, type_eng, page_number):
-    # 페이지 당 항목 수
-    items_per_page = 100
+def poke_type_kr_info_search(type_eng, input_kr_name, page_number) :
+    # 사용자 입력 받기
+    # 데이터 읽기
+    # print(page_number)
+    print(type_eng)
     poke_data = pd.read_csv("./service/datapokemon.csv", encoding="utf-8", index_col=0)
-
+    # print(poke_data)
+    # 타입 정보 추출
     poke_type = poke_data.loc[:, "타입"]
     index_list = [i for i, t in enumerate(poke_type) if t == type_eng]
+    # print(index_list)
+    # 페이지 크기와 페이지 번호 설정
+    items_per_page = 100
 
     poke_data['한글이름'] = poke_data['한글이름'].fillna('').astype(str)
     poke_data['이미지'] = poke_data['이미지'].fillna('').astype(str)
+
     poke_data_kr_name = poke_data['한글이름']
-
-    find_type_kr_name = []
-
-    for i in index_list :
-        # print(i)
-        # print(poke_data_kr_name.iloc[i])
-        find_type_kr_name.append(poke_data_kr_name.iloc[i])
-    # print(find_type_kr_name)
-
     poke_data_images = poke_data['이미지']
     poke_data_en_name = poke_data["영어이름"]
 
+    poke_data_type_kr_list = []
+
+    for i in index_list:
+        poke_data_type_kr_name = poke_data_kr_name.iloc[i]
+        poke_data_type_kr_list.append(poke_data_type_kr_name)
+
     results = []
 
-    for i, kr_name in enumerate(find_type_kr_name):
+    for i, kr_name in enumerate(poke_data_type_kr_list) :
         if pd.isna(kr_name):
             continue  # 결측치인 경우 건너뜁니다.
 
         if input_kr_name in kr_name:
-            results.append({"한글이름": kr_name,
-                            "이미지": poke_data_images.iloc[index_list[i]],
-                            "영어이름": poke_data_en_name.iloc[index_list[i]]})
+            results.append({"한글이름": kr_name, "이미지": poke_data_images.iloc[index_list[i]], "영어이름": poke_data_en_name.iloc[index_list[i]]})
 
-    # print(results)
+    # 페이지 범위 계산
     start_index = (page_number - 1) * items_per_page
     end_index = start_index + items_per_page
     poke_search_results = results[start_index:end_index]
     print(poke_search_results)
     return poke_search_results
 
-# poke_type_kr_search(input_kr_name, type_eng, page_number)
 
-# type_eng = input("타입 입력 : ")
-# input_en_name = input("찾고 싶은 포켓몬 : ")
-# page_number = int(input("페이지 번호 : "))
-def poke_type_en_search(input_en_name, type_eng, page_number):
-    # 페이지 당 항목 수
-    items_per_page = 100
+def poke_type_en_info_search(type_eng, input_en_name, page_number):
+    # 사용자 입력 받기
+    # 데이터 읽기
+    # print(page_number)
+    print(type_eng)
     poke_data = pd.read_csv("./service/datapokemon.csv", encoding="utf-8", index_col=0)
-
+    # print(poke_data)
+    # 타입 정보 추출
     poke_type = poke_data.loc[:, "타입"]
     index_list = [i for i, t in enumerate(poke_type) if t == type_eng]
+    # print(index_list)
+    # 페이지 크기와 페이지 번호 설정
+    items_per_page = 100
 
     poke_data['한글이름'] = poke_data['한글이름'].fillna('').astype(str)
     poke_data['이미지'] = poke_data['이미지'].fillna('').astype(str)
+
+    poke_data_kr_name = poke_data['한글이름']
+    poke_data_images = poke_data['이미지']
     poke_data_en_name = poke_data["영어이름"]
 
-    find_type_en_name = []
+    poke_data_type_en_list = []
+    print(index_list)
+    for i in index_list:
+        poke_data_type_en_name = poke_data_en_name.iloc[i]
+        poke_data_type_en_list.append(poke_data_type_en_name)
 
-    for i in index_list :
-        # print(i)
-        # print(poke_data_kr_name.iloc[i])
-        find_type_en_name.append(poke_data_en_name.iloc[i])
-    # print(find_type_kr_name)
-
-    poke_data_images = poke_data['이미지']
-    poke_data_kr_name = poke_data['한글이름']
-
+    print(poke_data_type_en_list)
     results = []
 
-    for i, en_name in enumerate(find_type_en_name):
+    for i, en_name in enumerate(poke_data_type_en_list):
         if pd.isna(en_name):
             continue  # 결측치인 경우 건너뜁니다.
 
         if input_en_name in en_name:
-            results.append({"영어이름": en_name,
-                            "이미지": poke_data_images.iloc[index_list[i]],
-                            "한글이름": poke_data_kr_name.iloc[index_list[i]]})
+            results.append({"한글이름": poke_data_kr_name.iloc[index_list[i]], "이미지": poke_data_images.iloc[index_list[i]],
+                            "영어이름": en_name})
 
-    # print(results)
+    # 페이지 범위 계산
     start_index = (page_number - 1) * items_per_page
     end_index = start_index + items_per_page
     poke_search_results = results[start_index:end_index]
     print(poke_search_results)
     return poke_search_results
-
-# poke_type_en_search(input_en_name, type_eng, page_number)
