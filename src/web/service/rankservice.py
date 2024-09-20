@@ -22,9 +22,18 @@ def start_tournament() :
 
 @app.route("/rank")
 def index():
+    page = request.args["page"]
+    items = 100
+
+    start = (int(page) - 1) * items
+    end = start + items
+    if page == 11 :
+        end = 1025
+
     df = pd.read_csv("./service/datapokemon.csv", encoding="utf-8")
     df2 = df[['한글이름', '아이디', '영어이름', '이미지']]  # 랭킹 전체출력
-    jsonData = df2.to_json(orient='records', force_ascii=False)
+    df3 = df2[start : end]
+    jsonData = df3.to_json(orient='records', force_ascii=False)
     result = json.loads(jsonData)
     return result
 
