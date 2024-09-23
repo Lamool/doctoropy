@@ -40,7 +40,7 @@ def poke_skill_num() :
 
 def poke_new_skill_info(kr_name) :
     result = []
-    poke_each_skill_data = pd.read_csv("./service/poke_each_skill_data.csv", encoding="utf-8", index_col=0)
+    poke_each_skill_data = pd.read_csv("./service/new_poke_each_skill_data.csv", encoding="utf-8", index_col=0)
     poke_each_skill_data_poke_name = poke_each_skill_data["포켓몬"]
     poke_each_skill_data_dam = poke_each_skill_data["위력"]
     poke_each_skill_data_skill_name = poke_each_skill_data["스킬이름"]
@@ -50,7 +50,7 @@ def poke_new_skill_info(kr_name) :
             result.append({"인덱스": i,
                            "기술이름": poke_each_skill_data_skill_name.iloc[i],
                            "타입": poke_each_skill_data_type_name.iloc[i],
-                           "위력": poke_each_skill_data_dam.iloc[i],
+                           "위력": int(poke_each_skill_data_dam.iloc[i]),
                            "포켓몬": poke_name})
     return result
 
@@ -74,18 +74,15 @@ def poke_rate_skill_info(n) :
 
 def poke(n1, m1, n2, m2):
     poke_data = pd.read_csv("./service/datapokemon.csv", encoding="utf-8", index_col=0)
-    poke_each_skill_data = pd.read_csv("./service/poke_each_skill_data.csv", encoding="utf-8", index_col=0)
     print(poke_data)
 
     # print(poke_data.iloc[1000])
     poke_data_one = poke_data.iloc[n1]
-    poke_skill_data_one = poke_each_skill_data.iloc[m1]
-    print(poke_skill_data_one)
+    print(m1)
     poke_data_two = poke_data.iloc[n2]
-    poke_skill_data_two = poke_each_skill_data.iloc[m2]
-    print(poke_skill_data_two)
-    a_pokemon = rate_poke_mon_A(poke_data_one["체력"], poke_data_one["공격"], poke_data_one["방어"], poke_data_one["특수공격"], poke_data_one["특수방어"], poke_data_one["스피드"], poke_data_one["타입"], poke_skill_data_one["위력"])
-    b_pokemon = rate_poke_mon_A(poke_data_two["체력"], poke_data_two["공격"], poke_data_two["방어"], poke_data_two["특수공격"], poke_data_two["특수방어"], poke_data_two["스피드"], poke_data_two["타입"], poke_skill_data_two["위력"])
+    print(m2)
+    a_pokemon = rate_poke_mon_A(poke_data_one["체력"], poke_data_one["공격"], poke_data_one["방어"], poke_data_one["특수공격"], poke_data_one["특수방어"], poke_data_one["스피드"], poke_data_one["타입"], int(m1))
+    b_pokemon = rate_poke_mon_A(poke_data_two["체력"], poke_data_two["공격"], poke_data_two["방어"], poke_data_two["특수공격"], poke_data_two["특수방어"], poke_data_two["스피드"], poke_data_two["타입"], int(m2))
     rate_dict = rate_cal(a_pokemon, b_pokemon)
 
     return rate_dict
