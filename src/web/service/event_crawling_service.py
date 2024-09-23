@@ -4,21 +4,32 @@ from selenium.webdriver.common.by import By
 import pandas as pd
 import time
 import json
+import os
+
+def check_csv_exists(file_name='./service/event_crawling.csv'):
+    # 현재 작업 디렉토리에서 event_crawling.csv 파일의 존재 여부 확인
+    return os.path.isfile(file_name)
 
 # 포켓몬 스토어 온라인 - 이벤트 페이지 일부 항목 크롤링
 def pokemon_event() :
+    if check_csv_exists():
+        print("파일이 존재합니다. (True 반환)")
+    else:
+        print("파일이 존재하지 않습니다. (False 반환)")
+
     # 브라우저 옵션 설정 (예: Headless 모드)
         # Selenium은 기본적으로 브라우저를 띄움
         # Headless 모드를 사용하면 브라우저를 띄우지 않고도 JavaScript를 실행하여 동적으로 로드된 데이터를 가져올 수 있음
     chrome_options = Options()
     chrome_options.add_argument("--headless")
+    chrome_options.add_argument("--disable-gpu")  # GPU 사용 비활성화
 
     # webdriver 객체 생성
     wd = webdriver.Chrome(options=chrome_options)
 
     # 포켓몬 스토어 온라인 웹페이지 연결
     wd.get('https://pokemonstore.co.kr/pages/board/event.html?boardId=event-benefit&pageNumber=1&searchType=ALL&keyword=')
-    # time.sleep(2)
+    time.sleep(2)
 
     event = []  # 이벤트 정보를 담을 리스트
 
@@ -53,8 +64,18 @@ def pokemon_event() :
     event_df = pd.DataFrame(event, columns=['이미지', '제목', '작성일'])
     print(event_df)
 
+    # 데이터프레임 객체 정보를 csv 파일로 저장
+    event_df.to_csv('./service/event_crawling.csv', encoding='utf-8', mode='w', index=True)
+
+    wd.quit()       # 드라이버 종료
+
+
+
+    # CSV를 DataFrame으로 불러오기
+    event_df2 = pd.read_csv('./service/event_crawling.csv', encoding='utf-8', index_col=0)
+
     # 데이터 프레임 객체를 JSON으로 가져오기
-    json_event_data = event_df.to_json(orient='records', force_ascii=False)
+    json_event_data = event_df2.to_json(orient='records', force_ascii=False)
     print(json_event_data)
 
     # JSON 형식 (문자열 타입)의 py타입(객체타입-리스트/딕셔너리)으로 변환
