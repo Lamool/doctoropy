@@ -39,3 +39,8 @@ def rate_skill_all() :
     poke_data_json_loads = poke_skill_num()
     return poke_data_json_loads
 
+@app.route("/rate/each_skill_info", methods=["GET"])
+def each_skill_info():
+    kr_name = request.args["kr_name"]
+    poke_skill_each_data_list = poke_new_skill_info(kr_name)
+    return poke_skill_each_data_list
