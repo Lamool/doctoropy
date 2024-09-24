@@ -7,8 +7,18 @@ def base_stats_print_all(data) :
     pokemon_data = pd.read_csv("./service/datapokemon.csv", encoding="utf-8", index_col=0)
     # print(pokemon_data)
 
+    # pokemon_data라는 데이터프레임에서 특정 열만 추출하여 pokemon_data_df라는 새로운 데이터 프레임 만들기
     pokemon_data_df = pokemon_data[["한글이름", "영어이름", "아이디", "이미지", "체력", "공격", "방어", "특수공격", "특수방어", "스피드", "타입"]]
     # print(pokemon_data_df)
+
+    type_kor_list = []      # 타입 한글화 한 것을 담을 리스트
+    for type_eng in pokemon_data_df["타입"] :
+        type_kor = type_trans(type_eng)         # 타입 한글화 함수 호출
+        # print(type_kor)
+        type_kor_list.append(type_kor)          # 타입 한글화 한 것을 리스트에 추가
+
+    pokemon_data_df["타입"] = type_kor_list      # 한글화 한 타입을 데이터프레임 타입 컬럼에 대입
+    print(pokemon_data_df["타입"])
 
     # "체력", "공격", "방어", "특수공격", "특수방어", "스피드"의 합계를 구한 새로운 컬럼 '총합' 추가
     pokemon_data_df['총합'] = pokemon_data_df[["체력", "공격", "방어", "특수공격", "특수방어", "스피드"]].sum(axis=1)
@@ -35,6 +45,7 @@ def base_stats_print_all(data) :
     # print(result)
     return result
 
+# 타입 한글화 함수
 def type_trans(type) :
     if type == "normal" :
         kr_type = "노말"
