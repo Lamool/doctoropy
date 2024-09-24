@@ -1,5 +1,3 @@
-import pandas as pd
-
 from src.web.app import *
 from src.web.service.event_crawling_service import *
 

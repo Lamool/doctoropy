@@ -34,3 +34,42 @@ def base_stats_print_all(data) :
     result = json.loads(json_pokemon_data)  # import json 모듈 호출
     # print(result)
     return result
+
+def type_trans(type) :
+    if type == "normal" :
+        kr_type = "노말"
+    elif type == "fire" :
+        kr_type = "불"
+    elif type == "water" :
+        kr_type = "물"
+    elif type == "electric" :
+        kr_type = "전기"
+    elif type == "grass" :
+        kr_type = "풀"
+    elif type == "ice" :
+        kr_type = "얼음"
+    elif type == "fighting" :
+        kr_type = "격투"
+    elif type == "poison" :
+        kr_type = "독"
+    elif type == "ground" :
+        kr_type = "땅"
+    elif type == "flying" :
+        kr_type = "비행"
+    elif type == "psychic" :
+        kr_type = "에스퍼"
+    elif type == "bug" :
+        kr_type = "벌레"
+    elif type == "rock" :
+        kr_type = "바위"
+    elif type == "ghost" :
+        kr_type = "고스트"
+    elif type == "dragon" :
+        kr_type = "드래곤"
+    elif type == "dark" :
+        kr_type = "악"
+    elif type == "steel" :
+        kr_type = "강철"
+    elif type == "fairy" :
+        kr_type = "페어리"
+    return kr_type
