@@ -32,7 +32,7 @@ def pokemon_event() :
         wd.get('https://pokemonstore.co.kr/pages/board/event.html?boardId=event-benefit&pageNumber=1&searchType=ALL&keyword=')
         time.sleep(2)
 
-        # 필요한 요소 가져오기 (특정 ID로 요소 찾기)
+        # 필요한 요소 가져오기 (특정 ID로 요소 찾기) - ul 태그 (이벤트 목록)
         event_section = wd.find_element(By.ID, "boardArticles")
 
         # 이미지 태그를 모두 찾기
@@ -59,8 +59,20 @@ def pokemon_event() :
             i = i + 1
         print(event)
 
+        # a 태그(링크) 찾기
+        links_selector = "#boardArticles > li > .kd-event-thumb > a"
+        event_section_a = event_section.find_elements(By.CSS_SELECTOR, links_selector)
+
+        # event 리스트에 링크 추가
+        i = 0
+        for a in event_section_a :
+            print("a : ", a.get_attribute("href"))
+            event[i].append(a.get_attribute("href"))
+            i = i + 1
+        print(event)
+
         # 판다스를 이용한 2차원 리스트를 데이터 프레임 객체로 생성
-        event_df = pd.DataFrame(event, columns=['이미지', '제목', '작성일'])
+        event_df = pd.DataFrame(event, columns=['이미지', '제목', '작성일', '링크'])
         print(event_df)
 
         # 데이터프레임 객체 정보를 csv 파일로 저장
