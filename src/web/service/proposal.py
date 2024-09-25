@@ -9,10 +9,12 @@ from sklearn.model_selection import train_test_split # 모델 훈련용,테스�
 from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error  # MSE, R² 값 분석
 from src.web.controller.proposal import *
 
-def modeling(data):
+def modeling(data, users):
 
+    print(users)
     df = pd.DataFrame(data)
     df = df.drop(columns=['prono'])
+
     ages = []
     for i in df['ubirth'] :
         i = i[:4]
@@ -21,7 +23,7 @@ def modeling(data):
         ages.append(age)
     df['ubirth'] = ages
     df = df.replace({'M':1,'F':0})
-    # print(df)
+    print(df)
 
     # X ,Y 분할
     Y = df['pno']  # 타겟
@@ -42,20 +44,24 @@ def modeling(data):
     Y_predict = model.predict(X_test)
     # print(Y_predict)
 
-    #성능평가
-    #평균 절대 오차
+    # #성능평가
+    # #평균 절대 오차
     MAE = mean_absolute_error(Y_test, Y_predict)
-    print(MAE)
-
-    #평균 제곱 오차
+    # print(MAE)
+    #
+    # #평균 제곱 오차
     MSE = mean_squared_error(Y_test, Y_predict)
-    print(MSE)
-
-    #결정개수
+    # print(MSE)
+    #
+    # #결정개수
     r2 = r2_score(Y_test, Y_predict)
-    print(r2)
+    # print(r2)
 
     #새로운 데이털 포켓몬 번호 예측
-    newData = np.array([[0,26]])
+    print(uno)
+    newData = np.array([[1,30]])
     predict2 = model.predict(newData)
-    print(f'포켓몬 번호 결과 확인 : {predict2[0]:0.0f}')
+    # print(f'포켓몬 번호 결과 확인 : {predict2[0]:0.0f}')
+    num = round(predict2[0])
+    # print(num)
+    return num

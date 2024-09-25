@@ -1,3 +1,5 @@
+import requests
+from socks import method
 
 from src.web.app import *
 from flask import request
@@ -9,9 +11,15 @@ from src.web.service.proposal import *
 @app.route('/model/get', methods=["GET"])
 def fetch_data() :
     java_url = 'http://localhost:8080/pro/get'
-    response = request.get(java_url) #JAVA controller api 호출
-    data = response.json() #json 데이터형식으로 파싱
-    result = modeling(data)
-    return jsonify(data)
+    uno_url = ('http://localhost:8080/user/my/info')
 
-#내보내기
+    response = requests.get(java_url) #JAVA controller api 호출
+    response2 = requests.get(uno_url)
+
+    data = response.json() #json 데이터형식으로 파싱
+    users = response2.json()
+
+    result = modeling(data, users)
+
+    print(result)
+    return result
