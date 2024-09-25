@@ -53,7 +53,8 @@ print(f" FPR : {roc_auc_score(y_test, y_predict)}")    # 0.625 -> 수치가 1에
 
 
 new_data = [[50, 40, 30, 45, 55, 20, 55, 58, 40]]
-new_predict = LR_model.predict_proba(new_data)
-print(new_predict[0][1])
+scaled_new_data = scaler.fit_transform(new_data)
+new_predict = LR_model.predict_proba(scaled_new_data)
+print(f"예측값이 승리 쪽에 속할 확률 : {new_predict[0][1]}")
 
 
