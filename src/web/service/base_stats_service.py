@@ -84,3 +84,40 @@ def type_trans(type) :
     elif type == "fairy" :
         kr_type = "페어리"
     return kr_type
+
+# 특정 종족값에 대한 상위 퍼센트 계산
+def base_stats_print_percent(data) :
+    # 판다스를 이용한 csv를 데이터프레임으로 가져오기
+    pokemon_data = pd.read_csv("./service/datapokemon.csv", encoding="utf-8", index_col=0)
+    # print(pokemon_data)
+
+    # pokemon_data라는 데이터프레임에서 특정 열(종족값 목록 중 선택한 종족값)만 추출하여 pokemon_data_df라는 새로운 데이터 프레임 만들기
+    pokemon_data_df = pokemon_data[["한글이름", "영어이름", "아이디", "이미지", data['stats'], "타입"]]
+    print(pokemon_data_df)
+
+    # 내림차순으로 정렬 # 값이 같다면 아이디(번호) 기준 오름차순 정렬 # (ascending=True : 기본값, 오름차순 정렬)
+    pokemon_data_df = pokemon_data_df.sort_values(by=[data['stats'], '아이디'], ascending=[False, True])  # data['stats'] 속성을 내림차순 하겠다
+    print(pokemon_data_df)
+
+    # 선택한 종족값에 대해 위에서부터 순위를 매긴 후 새로운 컬럼 '상위퍼센트'에 추가
+    pokemon_data_df['상위퍼센트'] = range(1, len(pokemon_data_df) + 1)
+    print(pokemon_data_df)
+
+    # 매긴 순위를 이용해 상위 퍼센트를 계산 # 상위퍼센트 = 순위 / 총 포켓몬 수 * 100
+    pokemon_data_df['상위퍼센트'] = pokemon_data_df['상위퍼센트'] / len(pokemon_data_df) * 100
+    print(pokemon_data_df)
+
+    # 데이터프레임 객체를 JSON으로 가져오기
+    json_pokemon_data = pokemon_data_df.to_json(orient='records', force_ascii=False)
+        # to_json() : 데이터프레임 객체 내 데이터를 JSON 변환함수
+            # oreint='records' : 각 행마다 하나의 JSON 객체로 구성
+            # force_ascii=False : 아스키 문자 사용 여부 : True(아스키), False(아스키 대신 유니코드 utf-8)
+    # print(json_pokemon_data)
+
+    # JSON 형식 (문자열 타입)의 py타입(객체타입-리스트/딕셔너리)으로 변환
+    result = json.loads(json_pokemon_data)  # import json 모듈 호출
+    # print(result)
+    return result
+
+
+
