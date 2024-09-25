@@ -1,4 +1,4 @@
-import requests
+
 from src.web.app import *
 from flask import request
 
@@ -9,7 +9,7 @@ from src.web.service.proposal import *
 @app.route('/model/get', methods=["GET"])
 def fetch_data() :
     java_url = 'http://localhost:8080/pro/get'
-    response = requests.get(java_url) #JAVA controller api 호출
+    response = request.get(java_url) #JAVA controller api 호출
     data = response.json() #json 데이터형식으로 파싱
     result = modeling(data)
     return jsonify(data)

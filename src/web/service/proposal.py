@@ -2,7 +2,6 @@ import numpy as np
 import pandas as pd
 import json
 
-import requests
 from src.web.app import *
 
 from sklearn.linear_model import LinearRegression #모델 객체 생성

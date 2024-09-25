@@ -2,16 +2,21 @@ import pandas as pd
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import confusion_matrix, accuracy_score, precision_score, f1_score, recall_score, roc_auc_score
+from sklearn.preprocessing import StandardScaler
 
 data = pd.read_csv("poke_rate_predict_record.csv", encoding="utf-8", index_col=0)
 
-x = data[["점수", "승률", "사용한_기술의_위력"]]
+x = data[["체력", "공격", "방어", "스피드", "특수공격", "특수방어", "점수", "승률", "사용한_기술의_위력"]]
 print(x)
+
+scaler = StandardScaler()
+x_scaled_data = scaler.fit_transform(x)
+print(x_scaled_data)
 
 y = data["결과"]
 print(y)
 
-x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.3, random_state=0)
+x_train, x_test, y_train, y_test = train_test_split(x_scaled_data, y, test_size=0.3, random_state=0)
 
 LR_model = LogisticRegression()
 
@@ -45,3 +50,10 @@ print(f" f1 스코어 : {f1_score(y_test, y_predict)}")         # 0.6   -> 수�
 
 # 5. FPR
 print(f" FPR : {roc_auc_score(y_test, y_predict)}")    # 0.625 -> 수치가 1에 가까울수록 좋은 성능이라고 평가를 내릴수 있다.
+
+
+new_data = [[50, 40, 30, 45, 55, 20, 55, 58, 40]]
+new_predict = LR_model.predict_proba(new_data)
+print(new_predict[0][1])
+
+
