@@ -85,11 +85,11 @@ def pokemon_event() :
 
     # 데이터 프레임 객체를 JSON으로 가져오기
     json_event_data = event_df2.to_json(orient='records', force_ascii=False)
-    print(json_event_data)
+    # print(json_event_data)
 
     # JSON 형식 (문자열 타입)의 py타입(객체타입-리스트/딕셔너리)으로 변환
     result = json.loads(json_event_data)
-    print(result)
+    # print(result)
 
     return result
 

@@ -103,6 +103,10 @@ def base_stats_print_percent(data) :
     pokemon_data_df['상위퍼센트'] = range(1, len(pokemon_data_df) + 1)
     print(pokemon_data_df)
 
+    # 인덱스 순으로 정렬
+    pokemon_data_df = pokemon_data_df.sort_index()
+    print(pokemon_data_df)
+
     # 매긴 순위를 이용해 상위 퍼센트를 계산 # 상위퍼센트 = 순위 / 총 포켓몬 수 * 100
     pokemon_data_df['상위퍼센트'] = pokemon_data_df['상위퍼센트'] / len(pokemon_data_df) * 100
     print(pokemon_data_df)
