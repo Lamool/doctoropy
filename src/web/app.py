@@ -15,6 +15,7 @@ from src.web.controller.info_controller import *
 from src.web.controller.base_stats_controller import *
 from src.web.controller.event_crawling_controller import *
 from src.web.controller.rate_pred_controller import *
+from src.web.controller.board_controller import  *
 from src.web.controller.proposal import *
 
 # 3. 플라스크 웹 실행
