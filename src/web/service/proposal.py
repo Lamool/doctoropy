@@ -2,7 +2,6 @@ import numpy as np
 import pandas as pd
 import json
 
-import requests
 from src.web.app import *
 
 from sklearn.linear_model import LinearRegression #모델 객체 생성
@@ -24,7 +23,7 @@ def modeling(data, users):
         ages.append(age)
     df['ubirth'] = ages
     df = df.replace({'M':1,'F':0})
-    print(df)
+    # print(df)
 
     # X ,Y 분할
     Y = df['pno']  # 타겟
@@ -59,7 +58,6 @@ def modeling(data, users):
     # print(r2)
 
     #새로운 데이털 포켓몬 번호 예측
-    print(uno)
     newData = np.array([[1,30]])
     predict2 = model.predict(newData)
     # print(f'포켓몬 번호 결과 확인 : {predict2[0]:0.0f}')
