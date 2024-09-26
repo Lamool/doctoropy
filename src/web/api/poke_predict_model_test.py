@@ -64,6 +64,9 @@ scaled_new_data3 = scaler.fit_transform(new_data3)
 
 new_predict = LR_model.predict_proba(new_data)
 print(new_predict[0][1])
+scaled_new_data = scaler.fit_transform(new_data)
+new_predict = LR_model.predict_proba(scaled_new_data)
+print(f"예측값이 승리 쪽에 속할 확률 : {new_predict[0][1]}")
 
 new_predict2 = LR_model.predict_proba(new_data2)
 print(new_predict2[0][1])
