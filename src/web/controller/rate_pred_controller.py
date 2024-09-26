@@ -25,3 +25,18 @@ def list_take() :
     print( data )
     poke_list_take(data)
     return jsonify({"status": "success", "received": []})
+
+@app.route("/rate_pred/update", methods=["GET"])
+def model_update():
+    poke_rate_predict_model()
+    return "승률 예측 모델 최신화 성공"
+
+@app.route("/rate_pred/predict", methods=["GET"])
+def poke_real_predict():
+    poke_index = request.args["poke_index"]
+    rskillpower = request.args["rskillpower"]
+
+    poke_info_list = poke_score_cal(poke_index, rskillpower)
+    new_poke_rate_predict = poke_rate_predict_result(poke_info_list)
+
+    return new_poke_rate_predict

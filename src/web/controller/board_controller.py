@@ -1,7 +1,7 @@
 
 from src.web.app import *
 import json
-import requests
+
 
 from src.web.service.board_service import *
 

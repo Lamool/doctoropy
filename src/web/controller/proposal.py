@@ -1,5 +1,3 @@
-import requests
-from socks import method
 
 from src.web.app import *
 from flask import request
@@ -13,8 +11,8 @@ def fetch_data() :
     java_url = 'http://localhost:8080/pro/get'
     uno_url = ('http://localhost:8080/user/my/info')
 
-    response = requests.get(java_url) #JAVA controller api 호출
-    response2 = requests.get(uno_url)
+    response = request.get(java_url) #JAVA controller api 호출
+    response2 = request.get(uno_url)
 
     data = response.json() #json 데이터형식으로 파싱
     users = response2.json()
