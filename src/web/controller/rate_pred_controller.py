@@ -40,3 +40,6 @@ def poke_real_predict():
     new_poke_rate_predict = poke_rate_predict_result(poke_info_list)
 
     return new_poke_rate_predict
+
+
+###

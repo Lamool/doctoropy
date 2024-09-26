@@ -113,3 +113,6 @@ new_data7 = [[40, 50, 45, 70, 70, 45, 55, 35]]
 
 new_predict7 = lr_model.predict(new_data7)
 print(new_predict7)
+
+
+###

@@ -135,3 +135,4 @@ def type_cal(type_a) :
         type_value_a = 1.0833
 
     return type_value_a
+###
