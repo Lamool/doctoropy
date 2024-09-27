@@ -1,17 +1,25 @@
 import numpy as np
 import pandas as pd
 import json
-
-from src.web.app import *
-
 from sklearn.linear_model import LinearRegression #모델 객체 생성
 from sklearn.model_selection import train_test_split # 모델 훈련용,테스트용 분류
 from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error  # MSE, R² 값 분석
 from src.web.controller.proposal import *
 
-def modeling(data, users):
+def modeling(data, gender, ubirth):
 
-    print(users)
+
+
+    if gender == 'M' :
+        gender = 1
+    elif gender == 'F' :
+        gender = 0
+
+    age = int(2024) - int(ubirth[:4])
+
+    # print(gender)
+    # print(age)
+
     df = pd.DataFrame(data)
     df = df.drop(columns=['prono'])
 
@@ -23,7 +31,7 @@ def modeling(data, users):
         ages.append(age)
     df['ubirth'] = ages
     df = df.replace({'M':1,'F':0})
-    print(df)
+    # print(df)
 
     # X ,Y 분할
     Y = df['pno']  # 타겟
@@ -58,8 +66,7 @@ def modeling(data, users):
     # print(r2)
 
     #새로운 데이털 포켓몬 번호 예측
-    print(uno)
-    newData = np.array([[1,30]])
+    newData = np.array([[gender,age]])
     predict2 = model.predict(newData)
     # print(f'포켓몬 번호 결과 확인 : {predict2[0]:0.0f}')
     num = round(predict2[0])
