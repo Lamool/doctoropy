@@ -34,9 +34,11 @@ def model_update():
 @app.route("/rate_pred/predict", methods=["GET"])
 def poke_real_predict():
     poke_index = request.args["poke_index"]
+    print(poke_index)
+
     rskillpower = request.args["rskillpower"]
 
-    poke_info_list = poke_score_cal(poke_index, rskillpower)
+    poke_info_list = poke_score_cal(int(poke_index), int(rskillpower))
     new_poke_rate_predict = poke_rate_predict_result(poke_info_list)
 
     return new_poke_rate_predict

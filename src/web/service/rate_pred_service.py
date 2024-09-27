@@ -53,7 +53,7 @@ def poke_rate_predict_result(poke_info_list):
     x_pred = [poke_info_list]
     new_poke_rate_predict = lr_model.predict(x_pred)
 
-    return new_poke_rate_predict
+    return list(new_poke_rate_predict)
 
 
 def poke_score_cal(n1, m1):
@@ -72,8 +72,9 @@ def poke_score_cal(n1, m1):
 
 def poke_rate_cal(a_pokemon) :
     type_value_a = type_cal(a_pokemon.type)
+    print(type_value_a)
     total_score_a = (a_pokemon.hp * 0.15) + (a_pokemon.atk * 0.2 * type_value_a) + (a_pokemon.spe_atk * 0.2 * (type_value_a * 0.5)) + (a_pokemon._def * 0.15) + (a_pokemon.spe_def * 0.15) + (a_pokemon.speed * 0.15) + (a_pokemon.sk_dam * 0.25)
-
+    print(total_score_a)
     return round(total_score_a, 2)
 
 

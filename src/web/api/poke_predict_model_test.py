@@ -98,7 +98,7 @@ RMSE = np.sqrt(MSE)
 R2_SCORE = r2_score(y_test1, y_predict1)
 print(f" MSE = {MSE}")              # MSE = 349.8993110412591
 print(f" RMSE = {RMSE}")            # RMSE = 18.70559571468546
-print(f" R2_SCORE = {R2_SCORE}")    # R2_SCORE = 0.5841816544889874
+print(f" R2_SCORE = {R2_SCORE}")    # R2_SCORE = (샘플 3만개) 0.5841816544889874 -> (샘플 4만개) 0.6454431074843747
 
 new_data5 = [[75, 85, 200, 30, 55, 65, 93, 60]]
 new_data6 = [[70, 80, 65, 85, 90, 65, 64, 35]]
