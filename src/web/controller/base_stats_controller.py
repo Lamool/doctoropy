@@ -5,7 +5,7 @@ from src.web.service.base_stats_service import *
 @app.route("/base/stats/print/all", methods=["POST"])
 def base_stats_all_print() :
     data = request.json  # JSON 형식으로 데이터 받기
-    print(data)  # 서버 콘솔에 출력
+    # print(data)  # 서버 콘솔에 출력
 
     result = base_stats_print_all(data)
     # print(result)
