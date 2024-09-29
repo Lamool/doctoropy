@@ -6,19 +6,20 @@ from sklearn.model_selection import train_test_split # 모델 훈련용,테스�
 from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error  # MSE, R² 값 분석
 from src.web.controller.proposal import *
 
-def modeling(data, gender, ubirth):
+def modeling(data, ubirth, gender):
 
-
-
-    if gender == 'M' :
-        gender = 1
-    elif gender == 'F' :
-        gender = 0
-
-    age = int(2024) - int(ubirth[:4])
+    # if gender == 'M' :
+    #     gender = 1
+    # elif gender == 'F' :
+    #     gender = 0
+    #
+    # age = int(2024) - int(ubirth[:4])
 
     # print(gender)
     # print(age)
+
+    # df2 = pd.DataFrame(uno)
+    # print(df2)
 
     df = pd.DataFrame(data)
     df = df.drop(columns=['prono'])
@@ -66,7 +67,7 @@ def modeling(data, gender, ubirth):
     # print(r2)
 
     #새로운 데이털 포켓몬 번호 예측
-    newData = np.array([[gender,age]])
+    newData = np.array([[gender,ubirth]])
     predict2 = model.predict(newData)
     # print(f'포켓몬 번호 결과 확인 : {predict2[0]:0.0f}')
     num = round(predict2[0])

@@ -1,3 +1,5 @@
+import json
+
 import requests
 from socks import method
 
@@ -9,23 +11,31 @@ from flask import jsonify
 from src.web.app import *
 
 #가져오기
-@app.route('/model', methods=["POST"])
+@app.route('/model', methods=["GET"])
 def fetch_data() :
     java_url = 'http://localhost:8080/pro/get'
 
-    user = request.get_json()
-
-    gender = user.get('gender')
-    ubirth = user.get('ubirth')
+    # print(java_url)
+    # print(uno_url)
 
     response = requests.get(java_url) #JAVA controller api 호출
-    data = response.json() #json 데이터형식으로 파싱
-    # print(data)
-    result = modeling(data, gender, ubirth)
-    post_data(result)
-    return result
+    # print(response)
 
-@app.route('/promodel', methods=["GET"])
-def post_data(result) :
+    data = response.json() #json 데이터형식으로 파싱
+
+    result = modeling(data)
     print(result)
-    return result
+
+    return str(result)
+
+@app.route('/ubirth', method=["GET"])
+def unoubirth() :
+    ubirth = request.args["ubirth"]
+    result = modeling(int(ubirth))
+    return json.loads(result)
+
+@app.route('/gender', method=["GET"])
+def gender() :
+    gender = request.args["gender"]
+    result = modeling(int(gender))
+    return json.loads(result)
