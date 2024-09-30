@@ -8,18 +8,8 @@ from src.web.controller.proposal import *
 
 def modeling(data, ubirth, gender):
 
-    # if gender == 'M' :
-    #     gender = 1
-    # elif gender == 'F' :
-    #     gender = 0
-    #
-    # age = int(2024) - int(ubirth[:4])
-
-    # print(gender)
-    # print(age)
-
-    # df2 = pd.DataFrame(uno)
-    # print(df2)
+    print(ubirth)
+    print(gender)
 
     df = pd.DataFrame(data)
     df = df.drop(columns=['prono'])
@@ -67,7 +57,7 @@ def modeling(data, ubirth, gender):
     # print(r2)
 
     #새로운 데이털 포켓몬 번호 예측
-    newData = np.array([[gender,ubirth]])
+    newData = np.array([[ubirth,gender]])
     predict2 = model.predict(newData)
     # print(f'포켓몬 번호 결과 확인 : {predict2[0]:0.0f}')
     num = round(predict2[0])
