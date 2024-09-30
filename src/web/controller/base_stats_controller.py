@@ -15,7 +15,8 @@ def base_stats_all_print() :
 @app.route("/base/stats/print/percent", methods=["POST"])
 def base_stats_percent_print() :
     data = request.json
-    print(data)
+    # print(data)
+
     result = base_stats_print_percent(data)
     # print(result)
     return result
