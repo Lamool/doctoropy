@@ -129,6 +129,16 @@ def base_stats_print_percent(data) :
     pokemon_data_df['상위퍼센트'] = round( pokemon_data_df['상위퍼센트'] / len(pokemon_data_df) * 100, 2 )
     # print(pokemon_data_df)
 
+    print(data)
+    print(data['sort'])
+    print(data['stats'])
+    if data['sort'] == '내림차순' :     # 내림차순으로 정렬 # 값이 같다면 아이디(번호) 기준 오름차순 정렬 # (ascending=True : 기본값, 오름차순 정렬)
+        pokemon_data_df = pokemon_data_df.sort_values(by=[data['stats'], '아이디'], ascending=[False, True])   # data['stats'] 속성을 내림차순 하겠다
+        print(pokemon_data_df)
+    else :          # 오름차순으로 정렬
+        pokemon_data_df = pokemon_data_df.sort_values(by=[data['stats'], '아이디'])  # data['stats'] 속성을 오름차순 하겠다
+        print(pokemon_data_df)
+
     # 데이터프레임 객체를 JSON으로 가져오기
     json_pokemon_data = pokemon_data_df.to_json(orient='records', force_ascii=False)
     # print(json_pokemon_data)
