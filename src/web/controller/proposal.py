@@ -35,16 +35,12 @@ def fetch_data() :
 
     return str(result)
 
-# @app.route('/ubirth', methods=["GET"])
-# def unoubirth() :
-#     ubirth = request.args["ubirth"]
-#     # print(ubirth)
-#     result = modeling(int(ubirth))
-#     return json.loads(result)
-#
-# @app.route('/gender', methods=["GET"])
-# def gender() :
-#     gender = request.args["gender"]
-#     # print(gender)
-#     result = modeling(int(gender))
-#     return json.loads(result)
+@app.route('/pokeinfos', methods=["GET"])
+def pokeinfos() :
+    # number = request.args["number"]
+    df = pd.read_csv("./service/datapokemon.csv", encoding="utf-8")
+    df3 = df[["한글이름","한글정보","한글정보2","아이디"]]
+    # print(df3)
+    jsonData = df3.to_json(orient='records', force_ascii=False)
+    result = json.loads(jsonData)
+    return result
