@@ -65,6 +65,7 @@ df['월'] = df['일시'].dt.month
 df['일'] = df['일시'].dt.day
 df['시'] = df['일시'].dt.hour
 df['분'] = df['일시'].dt.minute
+
 # print(df.head())
 
 x = df[['년', '월', '일', '시', '분']]
@@ -93,7 +94,9 @@ lr.fit(X_train,Y_train)
 
 
 #예측
-Y_predict = lr.predict(X_test.to_numpy())
+Y_predict = lr.predict(X_test)
+#X_test를 DataFrame에 맞춰서 예측하자.
+# numpy로 바꾸는 순간 열 형식/이름이 바뀔 수 있으니 주의!
 print(Y_predict)
 
 
@@ -102,9 +105,10 @@ import  numpy as np
 from sklearn.metrics import mean_squared_error, r2_score
 mse=mean_squared_error(Y_test, Y_predict)
 print(mse)
-rmse=np.sqrt(mse)
+rmse= np.sqrt(mse)
 print(rmse)
 
+
 #실제 날씨 예측해보기
-mpg_predict=lr.predict([[2024, 10, 21, 16, 49]])
+mpg_predict=lr.predict([[2024, 12, 17, 13, 50]])
 print(mpg_predict)
