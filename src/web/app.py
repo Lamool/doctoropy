@@ -18,6 +18,7 @@ from src.web.controller.rate_pred_controller import *
 from src.web.controller.board_controller import  *
 from src.web.controller.proposal import *
 from src.web.controller.my_pokemon_controller import *
+from src.web.controller.vote_city_controller import *
 
 # 3. 플라스크 웹 실행
 if __name__ == "__main__":
