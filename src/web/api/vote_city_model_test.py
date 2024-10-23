@@ -27,7 +27,7 @@ for i in df1["성별"]:
 df1["성별"] = num_gen1
 
 # print(df1)
-x1 = df1[["성별", "선택_수", "생일"]]
+x1 = df1[["성별", "생일"]]
 y1 = df1["도시_번호"]
 
 x_train1, x_test1, y_train1, y_test1 = train_test_split(x1, y1, test_size=0.3, random_state=0)
@@ -52,7 +52,7 @@ coef = pd.Series(data=np.round(model1.coef_, 2), index=x1.columns)
 coef.sort_values(ascending=False)
 print(coef)
 
-new_data1 = [[1, 1, 10]]
+new_data1 = [[0, 27]]
 
 new_predict1 = model1.predict(new_data1)
 print(new_predict1) # 나이 30 : [64.16455888] 20 : [62.63297075] 10 : [61.10138262]
@@ -78,7 +78,7 @@ for i in df2["성별"]:
 df2["성별"] = num_gen2
 
 # print(df2)
-x2 = df2[["성별", "선택_수", "생일"]]
+x2 = df2[["성별", "생일"]]
 y2 = df2["도시_번호"]
 
 x_train2, x_test2, y_train2, y_test2 = train_test_split(x2, y2, test_size=0.3, random_state=0)
@@ -103,7 +103,7 @@ coef = pd.Series(data=np.round(model2.coef_, 2), index=x2.columns)
 coef.sort_values(ascending=False)
 print(coef)
 
-new_data2 = [[0, 4, 25]]
+new_data2 = [[1, 15]]
 
 new_predict2 = model2.predict(new_data2)
 print(new_predict2) # 나이 30 : [64.16455888] 20 : [62.63297075] 10 : [60.85017428]
@@ -133,7 +133,7 @@ for i in df3["성별"]:
 df3["성별"] = num_gen3
 
 # print(df3)
-x3 = df3[["성별", "선택_수", "생일"]]
+x3 = df3[["성별", "생일"]]
 y3 = df3["도시_번호"]
 
 x_train3, x_test3, y_train3, y_test3 = train_test_split(x3, y3, test_size=0.3, random_state=0)
@@ -158,7 +158,7 @@ coef = pd.Series(data=np.round(model3.coef_, 2), index=x3.columns)
 coef.sort_values(ascending=False)
 print(coef)
 
-new_data3 = [[0, 4, 25]]
+new_data3 = [[1, 50]]
 
 new_predict3 = model3.predict(new_data3)
 print(new_predict3) # 나이 30 : [64.16455888] 20 : [62.63297075] 10 : [57.8156578]
