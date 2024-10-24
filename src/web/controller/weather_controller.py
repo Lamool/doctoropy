@@ -1,12 +1,14 @@
 #
+# # from flask import Flask, request, jsonify
+# # from src.web.service.weather_service import *
 # from src.web.app import *
-# from flask import Flask, request, jsonify
-# from src.web.service.weather_service import *
+# # CORS(app, supports_credentials=True, resources={r"*": {"origins": "*"}})  # 모든 출처 허용
 # @app.route('/updateTime',methods=['get'])
 # def update_time():
-#    java_url = 'http://localhost:8080/weather/'
-#    response = requests.get(java_url)  # JAVA controller api 호출
-#    print(response)
+#    # java_url = 'http://localhost:8080/weather/'
+#    # response = requests.get(java_url)  # JAVA controller api 호출
+#    # print(response)
+#
 #    year=request.args.get('year'),
 #    month=request.args.get('month'),
 #    day=request.args.get('day'),
