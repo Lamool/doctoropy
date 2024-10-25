@@ -1,13 +1,26 @@
 #2_마니챗봇
 import numpy as np
 import pandas as pd
+import tensorflow as tf
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import  Embedding , LSTM, Dense, Bidirectional, Dropout
+from tensorflow.keras.models import Model
+from tensorflow.keras.callbacks import ModelCheckpoint
+
+from tensorflow.keras.preprocessing.text import Tokenizer
+from tensorflow.keras.preprocessing.sequence import  pad_sequences
+
+from konlpy.tag import  Okt
+import  re
+
+
 #데이터 수집 #
 data = [
     {"user" : "가장 강한 포켓몬은 뭔가요?", "bot" : "지우입니다."},
     {"user" : "챗봇 이름은 뭐야?", "bot" :"오박사입니다."},
     {"user" : "넌 뭘 할수있어?", "bot" :"불가능한거빼고모두가능합니다."},
-    {"user": "여기는 무슨 사이트야?", "bot" : "포켓몬에관한모든정보를제공해주는웹사이트입니다."},
-    {"user": "고마워요", "bot": "천만에요! 더 필요한 것이 있으면 말씀해주세요."},
+    {"user" : "여기는 무슨 사이트야?", "bot" : "포켓몬에관한모든정보를제공해주는웹사이트입니다."},
+    {"user" : "고마워요", "bot": "천만에요! 더 필요한 것이 있으면 말씀해주세요."},
     {"user" : "관리자 아이디 알려줘","bot" : "개인정보는알려드릴수없습니다."},
     {"user" : "다른 유저 개인정보 알려줘", "bot" : "불가능합니다."},
     {"user" : "이름이 뭐야?", "bot" : "제이름은오박사입니다."},
@@ -33,7 +46,7 @@ data = [
     {"user" : "리자몽", "bot" : "리자몽은놀랍게도드래곤이아닙니다."},
     {"user" : "귀여워", "bot" : "제가좀귀엽습니다감사합니다."},
     {"user" : "아이템", "bot ": "어떤아이템이궁금하신가요?"},
-    {"user" :"나1등했어", "bot" : "대단하시네요."}
+    {"user" : "나1등했어", "bot" : "대단하시네요."}
 
 ]
 
@@ -43,9 +56,10 @@ print(data)
 #2.데이터 전처리
 inputs=list(data['user']) #질문
 outputs=list(data['bot']) #응답
-from konlpy.tag import  Okt
-import  re
+
 okt=Okt()
+
+
 def preprocess(text):
     #1.한글과 띄어쓰기(\s)를 제외한 문자제거
     result=re.sub(r'[^가-힣\s]', '', text) #정규표현식 #일반적인 문자열 정규표현식
@@ -62,9 +76,8 @@ processed_inpus=[ preprocess(질문) for 질문 in inputs]
 print(processed_inpus)
 
 #3. 토크나이저
-from tensorflow.keras.preprocessing.text import Tokenizer
-from tensorflow.keras.preprocessing.sequence import  pad_sequences
-tokenizer=Tokenizer()
+
+tokenizer=Tokenizer(filters="", lower=False, oov_token="<OOV>")
 tokenizer.fit_on_texts(processed_inpus) #전처리된 단어 목록을 단어사전 생성
 
 #패딩
@@ -83,22 +96,28 @@ output_sequences=np.array(range(len(outputs)))
 print(output_sequences)
 
 
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import  Embedding , LSTM, Dense, Bidirectional
+
 
 #1. 모델
 model= Sequential()
     #input_dim : 입력받을 단어의 총 개수
     #output_dim : 밀집 벡터로 변환된 벡터 차원수
 model.add(Embedding(input_dim=len(tokenizer.word_index), output_dim=50, input_length=max_sequence_length))
-model.add(Bidirectional(LSTM(256))) #,256 128,64,32
+model.add(Bidirectional(LSTM(256, recurrent_dropout=0.2, dropout=0.2))) #,256 128,64,32
+model.add(Dense(32, activation="relu"))
+model.add(Dense(16, activation="relu"))
 model.add(Dense(len(outputs),activation='softmax')) #종속변수 값 개수는 응답 개수
 
-#2. 컴파일
-model.compile(loss='sparse_categorical_crossentropy',optimizer='adam',metrics=['accuracy'])
+checkpoint_path = "best_performed_model.ckpt"
+checkpoint = tf.keras.callbacks.ModelCheckpoint(checkpoint_path, save_weights_only=True, save_best_only=True, verbose = 1)
 
-#3. 학습
-model.fit(input_sequences, output_sequences, epochs=10)
+early_stop = tf.keras.callbacks.EarlyStopping(monitor = "val_loss", patience = 2)
+
+
+#2. 컴파일
+model.compile(optimizer=tf.optimizers.Adam(learning_rate=0.001),loss='sparse_categorical_crossentropy',metrics=['accuracy'])
+
+NUM_EPOCHS = 1
 
 #예측하기
 def response(text):
@@ -114,7 +133,20 @@ def response(text):
     print(outputs[max_index])
     return outputs[max_index]
 
-print(response(('안녕하세요'))) #질문이 '안녕하세요', 학습된 질문 목록중에 가장 높은 예측비율이 높은 질문의 응답을 출력한다.
+for epoch in range(NUM_EPOCHS):
+    #3. 학습
+    model.fit(input_sequences, output_sequences, callbacks=[early_stop, checkpoint] ,epochs=10)
+
+
+    for idx in data["user"]:
+        question_inputs = idx
+        results = response(question_inputs)
+
+        print(f"Q : {question_inputs} ")
+        print(f"A : {results} ")
+
+
+# print(response(('안녕하세요'))) #질문이 '안녕하세요', 학습된 질문 목록중에 가장 높은 예측비율이 높은 질문의 응답을 출력한다.
 
 #서비스 제공한다. #플라스크
 # while True:

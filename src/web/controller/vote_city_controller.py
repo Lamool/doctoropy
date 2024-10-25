@@ -65,3 +65,33 @@ def third_record():
     vote_record_list_third(data)
 
     return jsonify({"status" : "success", "received" : []})
+
+@app.route("/vote/first_pred", methods = ["GET"])
+def first_pred():
+    gen = request.args["gen"]
+    age = request.args["age"]
+
+    result = first_city_pred(gen, age)
+
+    return result
+
+
+@app.route("/vote/second_pred", methods=["GET"])
+def second_pred():
+    gen = request.args["gen"]
+    age = request.args["age"]
+
+    result = second_city_pred(gen, age)
+
+    return result
+
+
+@app.route("/vote/third_pred", methods=["GET"])
+def third_pred():
+    gen = request.args["gen"]
+    age = request.args["age"]
+
+    result = third_city_pred(gen, age)
+
+    return result
+
