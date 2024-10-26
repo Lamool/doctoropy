@@ -40,7 +40,7 @@ def poke_skill_num() :
 
 def poke_new_skill_info(kr_name) :
     result = []
-    poke_each_skill_data = pd.read_csv("new_poke_each_skill_data.csv", encoding="utf-8", index_col=0)
+    poke_each_skill_data = pd.read_csv("./service/new_poke_each_skill_data.csv", encoding="utf-8", index_col=0)
     poke_each_skill_data_poke_name = poke_each_skill_data["포켓몬"]
     poke_each_skill_data_dam = poke_each_skill_data["위력"]
     poke_each_skill_data_skill_name = poke_each_skill_data["스킬이름"]
