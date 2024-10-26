@@ -623,7 +623,7 @@ for epoch in range(NUM_EPOCHS):
     #3. 학습
     model.fit(input_sequences, output_sequences, callbacks=[early_stop, checkpoint] ,epochs=10)
 
-    #
+
     # for idx in data["user"]:
     #     question_inputs = idx
     #     results = response(question_inputs)
@@ -631,12 +631,12 @@ for epoch in range(NUM_EPOCHS):
 
 # print(response(('안녕하세요'))) #질문이 '안녕하세요', 학습된 질문 목록중에 가장 높은 예측비율이 높은 질문의 응답을 출력한다.
 
-#서비스 제공한다. #플라스크
+# #서비스 제공한다. #플라스크
 # while True:
 #     text=input('사용자:') #챗봇에게 전달할 내용 입력받기
 #     result=response(text) #입력받은 내용을 함수에 넣어 응답 예측을 한다
 #     print(f'챗봇:{result}') #예측한 응답 출력한다.
-#
+
 
 
 
