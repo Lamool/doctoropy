@@ -49,7 +49,7 @@ def poke_all_info_print(page) :
 
 
 def poke_detail_info_print(name) :
-    poke_data = pd.read_csv("./service/datapokemon.csv", encoding="utf-8", index_col=0)
+    poke_data = pd.read_csv("datapokemon.csv", encoding="utf-8", index_col=0)
     name_poke_data = poke_data.loc[:, "영어이름"]
 
     for i, n in enumerate(name_poke_data) :
