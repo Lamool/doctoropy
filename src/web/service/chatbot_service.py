@@ -22,7 +22,7 @@ from src.web.service.weather_service import *
 
 
 def poke_info_search(*kwargs):
-    poke_data = pd.read_csv("datapokemon.csv", encoding="utf-8", index_col=0)
+    poke_data = pd.read_csv("./service/datapokemon.csv", encoding="utf-8", index_col=0)
     kr_name = poke_data["한글이름"]
     en_name = poke_data["영어이름"]  # en_name을 초기화합니다.
     search_en_name = ""
@@ -42,7 +42,7 @@ def poke_info_search(*kwargs):
 
 def poke_each_skills(*kwargs):
     result = []
-    poke_data = pd.read_csv("datapokemon.csv", encoding="utf-8", index_col=0)
+    poke_data = pd.read_csv("./service/datapokemon.csv", encoding="utf-8", index_col=0)
     kr_name = poke_data["한글이름"]
 
     search_name = str(kwargs[0]).split(" ")  # 첫 번째 인자를 문자열로 변환합니다.
@@ -83,9 +83,7 @@ def poke_each_skills(*kwargs):
 
 response_functions = {
     0 : poke_info_search,
-    1 : poke_each_skills,
-    # 5 : predict_weather
-
+    1 : poke_each_skills
 }
 
 #데이터 수집 #
@@ -464,7 +462,72 @@ data = [
 {"user" : "삼순위 카드는 뭐야?" ,"bot" : "드래펄트ex 카드입니다."},
 {"user" : "네번째 좋은 카드는 뭐야?" ,"bot" : "분석중이라 알려드릴수가 없네요."},
 {"user" : "4순위 카드는 뭐야?" ,"bot" : "분석중이라 알려드릴수가 없네요."},
-{"user" : "사순위 카드는 뭐야?" ,"bot" : "분석중이라 알려드릴수가 없네요."}
+{"user" : "사순위 카드는 뭐야?" ,"bot" : "분석중이라 알려드릴수가 없네요."},
+{"user" : "가장 귀여운 포켓몬은?" ,"bot" : "제 생각은 파밀리쥐 입니다."},
+{"user" : "가장 귀여운 포켓몬은 뭐야?" ,"bot" : "제 생각은 파밀리쥐 입니다."},
+{"user" : "가장 귀여운 포켓몬은 뭐라고 생각해?" ,"bot" : "제 생각은 파밀리쥐 입니다."},
+{"user" : "귀여운 포켓몬은?" ,"bot" : "제 생각은 파밀리쥐 입니다."},
+{"user" : "네 생각에 가장 귀여운 포켓몬은?" ,"bot" : "제 생각은 파밀리쥐 입니다."},
+{"user" : "너는 가장 귀여운 포켓몬이 뭐라고 생각해?" ,"bot" : "제 생각은 파밀리쥐 입니다."},
+{"user" : "너가 생각한 가장 귀여운 포켓몬은?" ,"bot" : "제 생각은 파밀리쥐 입니다."},
+{"user" : "너가 생각한 가장 멋진 포켓몬은?" ,"bot" : "제 생각은 거북왕 입니다."},
+{"user" : "가장 멋진 포켓몬은?" ,"bot" : "제 생각은 거북왕 입니다."},
+{"user" : "네 기준 가장 멋진 포켓몬은?" ,"bot" : "제 생각은 거북왕 입니다."},
+{"user" : "네가 생각한 가장 멋진 포켓몬은?" ,"bot" : "제 생각은 거북왕 입니다."},
+{"user" : "멋진 포켓몬은?" ,"bot" : "제 생각은 거북왕 입니다."},
+{"user" : "가장 아름다운 포켓몬은?" ,"bot" : "제 생각은 밀로틱 입니다."},
+{"user" : "너가 생각한 가장 아름다운 포켓몬은?" ,"bot" : "제 생각은 밀로틱 입니다."},
+{"user" : "네가 생각한 가장 아름다운 포켓몬은?" ,"bot" : "제 생각은 밀로틱 입니다."},
+{"user" : "아름다운 포켓몬은?" ,"bot" : "제 생각은 밀로틱 입니다."},
+{"user" : "가장 아름다운 포켓몬은 뭐야?" ,"bot" : "제 생각은 밀로틱 입니다."},
+{"user" : "가장 아름다운 포켓몬은 무엇일까?" ,"bot" : "제 생각은 밀로틱 입니다."},
+{"user" : "가장 강한 타입은?" ,"bot" : "저는 풀타입 이라고 생각합니다."},
+{"user" : "네가 생각한 가장 강한 타입은?" ,"bot" : "저는 풀타입 이라고 생각합니다."},
+{"user" : "너가 생각한 가장 강한 타입은?" ,"bot" : "저는 풀타입 이라고 생각합니다."},
+{"user" : "네 기준 가장 강한 타입은?" ,"bot" : "저는 풀타입 이라고 생각합니다."},
+{"user" : "너 기준 가장 강한 타입은?" ,"bot" : "저는 풀타입 이라고 생각합니다."},
+{"user" : "니 기준 가장 강한 타입은?" ,"bot" : "저는 풀타입 이라고 생각합니다."},
+{"user" : "너의 기준 가장 강한 타입은?" ,"bot" : "저는 풀타입 이라고 생각합니다."},
+{"user" : "가장 강한 타입은 뭘까?" ,"bot" : "저는 풀타입 이라고 생각합니다."},
+{"user" : "가장 강한 타입은 뭐야?" ,"bot" : "저는 풀타입 이라고 생각합니다."},
+{"user" : "가장 강한 타입은 뭐라고 생각해?" ,"bot" : "저는 풀타입 이라고 생각합니다."},
+{"user" : "약한 타입은 뭐야?" ,"bot" : "저는 비행타입 이라고 생각합니다."},
+{"user" : "네가 생각한 약한 타입은 뭐야?" ,"bot" : "저는 비행타입 이라고 생각합니다."},
+{"user" : "너가 생각한 약한 타입은 뭐야?" ,"bot" : "저는 비행타입 이라고 생각합니다."},
+{"user" : "니가 생각한 약한 타입은 뭐야?" ,"bot" : "저는 비행타입 이라고 생각합니다."},
+{"user" : "너의 기준 약한 타입은 뭐야?" ,"bot" : "저는 비행타입 이라고 생각합니다."},
+{"user" : "네 기준 약한 타입은 뭐야?" ,"bot" : "저는 비행타입 이라고 생각합니다."},
+{"user" : "니 기준 약한 타입은 뭐야?" ,"bot" : "저는 비행타입 이라고 생각합니다."},
+{"user" : "너 기준 약한 타입은 뭐야?" ,"bot" : "저는 비행타입 이라고 생각합니다."},
+{"user" : "가장약한 타입은 뭐야?" ,"bot" : "저는 비행타입 이라고 생각합니다."},
+{"user" : "네가 생각한 가장약한 타입은 뭐야?" ,"bot" : "저는 비행타입 이라고 생각합니다."},
+{"user" : "너가 생각한 가장약한 타입은 뭐야?" ,"bot" : "저는 비행타입 이라고 생각합니다."},
+{"user" : "니가 생각한 가장약한 타입은 뭐야?" ,"bot" : "저는 비행타입 이라고 생각합니다."},
+{"user" : "너의 기준 가장약한 타입은 뭐야?" ,"bot" : "저는 비행타입 이라고 생각합니다."},
+{"user" : "네 기준 가장약한 타입은 뭐야?" ,"bot" : "저는 비행타입 이라고 생각합니다."},
+{"user" : "니 기준 가장약한 타입은 뭐야?" ,"bot" : "저는 비행타입 이라고 생각합니다."},
+{"user" : "너 기준 가장약한 타입은 뭐야?" ,"bot" : "저는 비행타입 이라고 생각합니다."},
+{"user" : "가장 좋은 몬스터볼은 뭐야?" ,"bot" : "마스터볼입니다."},
+{"user" : "네가 생각한 가장 좋은 몬스터볼은 뭐야?" ,"bot" : "마스터볼입니다."},
+{"user" : "너가 생각한 가장 좋은 몬스터볼은 뭐야?" ,"bot" : "마스터볼입니다."},
+{"user" : "니가 생각한 가장 좋은 몬스터볼은 뭐야?" ,"bot" : "마스터볼입니다."},
+{"user" : "가장 좋은 몬스터볼은 뭐지?" ,"bot" : "마스터볼입니다."},
+{"user" : "가장 좋은 몬스터볼은 뭘까?" ,"bot" : "마스터볼입니다."},
+{"user" : "좋은 몬스터볼은?" ,"bot" : "마스터볼입니다."},
+{"user" : "가장 인기있는 포켓몬" ,"bot" : "해당 포켓몬 입니다."},
+{"user" : "인기있는 포켓몬" ,"bot" : "해당 포켓몬 입니다."},
+{"user" : "가장 못생긴 포켓몬" ,"bot" : "저는 질뻐기 라고 생각합니다."},
+{"user" : "못생긴 포켓몬" ,"bot" : "저는 질뻐기 라고 생각합니다."},
+{"user" : "제일 못생긴 포켓몬" ,"bot" : "저는 질뻐기 라고 생각합니다."},
+{"user" : "네 생각에 가장 못생긴 포켓몬" ,"bot" : "저는 질뻐기 라고 생각합니다."},
+{"user" : "네 생각에 못생긴 포켓몬" ,"bot" : "저는 질뻐기 라고 생각합니다."},
+{"user" : "네 생각에 제일 못생긴 포켓몬" ,"bot" : "저는 질뻐기 라고 생각합니다."},
+{"user" : "너 생각에 가장 못생긴 포켓몬" ,"bot" : "저는 질뻐기 라고 생각합니다."},
+{"user" : "너 생각에 못생긴 포켓몬" ,"bot" : "저는 질뻐기 라고 생각합니다."},
+{"user" : "너 생각에 제일 못생긴 포켓몬" ,"bot" : "저는 질뻐기 라고 생각합니다."},
+{"user" : "니 생각에 가장 못생긴 포켓몬" ,"bot" : "저는 질뻐기 라고 생각합니다."},
+{"user" : "니 생각에 못생긴 포켓몬" ,"bot" : "저는 질뻐기 라고 생각합니다."},
+{"user" : "니 생각에 제일 못생긴 포켓몬" ,"bot" : "저는 질뻐기 라고 생각합니다."}
 # {"user" : "오늘 날씨 알려줘" ,"bot" : "날씨를 알려드릴게요."}
 
 ]
@@ -481,7 +544,7 @@ okt=Okt()
 
 def preprocess(text):
     #1.한글과 띄어쓰기(\s)를 제외한 문자제거
-    result=re.sub(r'[^가-힣\s]', '', text) #정규표현식 #일반적인 문자열 정규표현식
+    result=re.sub(r'[^가-힣0-9\s]', '', text) #정규표현식 #일반적인 문자열 정규표현식
     #2. 형태소 분석
     result=okt.pos(result) ; print(result)
     #3. 명사와 동사와 형용사 외 제거 #형태소 분석기가 각 형태소들을 명칭하는 단어들 (pos)변수 존재한다.
@@ -536,7 +599,7 @@ early_stop = tf.keras.callbacks.EarlyStopping(monitor = "loss", patience = 2)
 #2. 컴파일
 model.compile(optimizer=tf.optimizers.Adam(learning_rate=0.001),loss='sparse_categorical_crossentropy',metrics=['accuracy'])
 
-NUM_EPOCHS = 20
+NUM_EPOCHS = 1
 
 #예측하기
 def response(message):
@@ -560,20 +623,20 @@ for epoch in range(NUM_EPOCHS):
     #3. 학습
     model.fit(input_sequences, output_sequences, callbacks=[early_stop, checkpoint] ,epochs=10)
 
-
-    for idx in data["user"]:
-        question_inputs = idx
-        results = response(question_inputs)
+    #
+    # for idx in data["user"]:
+    #     question_inputs = idx
+    #     results = response(question_inputs)
 
 
 # print(response(('안녕하세요'))) #질문이 '안녕하세요', 학습된 질문 목록중에 가장 높은 예측비율이 높은 질문의 응답을 출력한다.
 
-# 서비스 제공한다. #플라스크
-while True:
-    text=input('사용자:') #챗봇에게 전달할 내용 입력받기
-    result=response(text) #입력받은 내용을 함수에 넣어 응답 예측을 한다
-    print(f'챗봇:{result}') #예측한 응답 출력한다.
-
+#서비스 제공한다. #플라스크
+# while True:
+#     text=input('사용자:') #챗봇에게 전달할 내용 입력받기
+#     result=response(text) #입력받은 내용을 함수에 넣어 응답 예측을 한다
+#     print(f'챗봇:{result}') #예측한 응답 출력한다.
+#
 
 
 
