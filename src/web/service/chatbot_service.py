@@ -19,7 +19,7 @@ from src.web.service.service import *
 
 
 def poke_info_search(*kwargs):
-    poke_data = pd.read_csv("datapokemon.csv", encoding="utf-8", index_col=0)
+    poke_data = pd.read_csv("./service/datapokemon.csv", encoding="utf-8", index_col=0)
     kr_name = poke_data["한글이름"]
     en_name = poke_data["영어이름"]  # en_name을 초기화합니다.
     search_en_name = ""
@@ -39,7 +39,7 @@ def poke_info_search(*kwargs):
 
 def poke_each_skills(*kwargs):
     result = []
-    poke_data = pd.read_csv("datapokemon.csv", encoding="utf-8", index_col=0)
+    poke_data = pd.read_csv("./service/datapokemon.csv", encoding="utf-8", index_col=0)
     kr_name = poke_data["한글이름"]
 
     search_name = str(kwargs[0]).split(" ")  # 첫 번째 인자를 문자열로 변환합니다.
@@ -571,7 +571,7 @@ early_stop = tf.keras.callbacks.EarlyStopping(monitor = "loss", patience = 2)
 #2. 컴파일
 model.compile(optimizer=tf.optimizers.Adam(learning_rate=0.001),loss='sparse_categorical_crossentropy',metrics=['accuracy'])
 
-NUM_EPOCHS = 20
+NUM_EPOCHS = 1
 
 #예측하기
 def response(message):
@@ -596,18 +596,18 @@ for epoch in range(NUM_EPOCHS):
     model.fit(input_sequences, output_sequences, callbacks=[early_stop, checkpoint] ,epochs=10)
 
 
-    for idx in data["user"]:
-        question_inputs = idx
-        results = response(question_inputs)
+    # for idx in data["user"]:
+    #     question_inputs = idx
+    #     results = response(question_inputs)
 
 
 # print(response(('안녕하세요'))) #질문이 '안녕하세요', 학습된 질문 목록중에 가장 높은 예측비율이 높은 질문의 응답을 출력한다.
 
-#서비스 제공한다. #플라스크
-while True:
-    text=input('사용자:') #챗봇에게 전달할 내용 입력받기
-    result=response(text) #입력받은 내용을 함수에 넣어 응답 예측을 한다
-    print(f'챗봇:{result}') #예측한 응답 출력한다.
+# #서비스 제공한다. #플라스크
+# while True:
+#     text=input('사용자:') #챗봇에게 전달할 내용 입력받기
+#     result=response(text) #입력받은 내용을 함수에 넣어 응답 예측을 한다
+#     print(f'챗봇:{result}') #예측한 응답 출력한다.
 
 
 
