@@ -112,8 +112,8 @@ def predict_weather(year, month, date, hours, minutes):
     print(mpg_predict)
 
     # 예측된 값에서 기온과 강수량을 각각 분리
-    predicted_temperature = mpg_predict[:, 0]  # 첫 번째 열: 기온 예측
-    predicted_rainfall = mpg_predict[:, 1]  # 두 번째 열: 강수량 예측
+    predicted_temperature = int(mpg_predict[0][0])  # 기온을 정수로 변환
+    predicted_rainfall = mpg_predict[0][1]  # 강수량은 그대로 사용할 수 있음
 
     # 결과 출력
     print("예측된 기온:", predicted_temperature)

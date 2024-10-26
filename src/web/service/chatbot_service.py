@@ -6,6 +6,7 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import  Embedding , LSTM, Dense, Bidirectional, Dropout
 from tensorflow.keras.models import Model
 from tensorflow.keras.callbacks import ModelCheckpoint
+from sklearn.linear_model import LinearRegression
 
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tensorflow.keras.preprocessing.sequence import  pad_sequences
@@ -15,6 +16,8 @@ import  re
 
 from src.web.service.info_service import *
 from src.web.service.service import *
+
+from src.web.service.weather_service import *
 
 
 
@@ -52,9 +55,37 @@ def poke_each_skills(*kwargs):
 
     return result
 
+
+# def predict_weather(year, month, date, hours, minutes):
+#     print('날씨 서비스를 불러오는 중...')
+#
+#     # 데이터 형식 변환 (리스트로 만들기)
+#     data = [(year, month, date, hours, minutes)]
+#
+#     # 데이터 프레임으로 변환
+#     input_data = pd.DataFrame(data, columns=['년', '월', '일', '시', '분'])
+#
+#     # 모델 훈련을 위한 가상의 코드
+#     lr = LinearRegression()
+#     # 모델 훈련 과정이 필요함 (train data가 있어야 함)
+#     # lr.fit(X_train, Y_train)  # X_train과 Y_train이 필요함
+#
+#     # 실제 날씨 예측해보기
+#     mpg_predict = lr.predict(input_data)
+#     print(mpg_predict)
+#
+#     # 예측된 값에서 기온과 강수량을 각각 분리
+#     predicted_temperature = int(mpg_predict[0][0])  # 기온을 정수로 변환
+#
+#     return f'현재 날씨는 {predicted_temperature}° 입니다.'
+
+
+
 response_functions = {
     0 : poke_info_search,
-    1 : poke_each_skills
+    1 : poke_each_skills,
+    # 5 : predict_weather
+
 }
 
 #데이터 수집 #
@@ -434,7 +465,7 @@ data = [
 {"user" : "네번째 좋은 카드는 뭐야?" ,"bot" : "분석중이라 알려드릴수가 없네요."},
 {"user" : "4순위 카드는 뭐야?" ,"bot" : "분석중이라 알려드릴수가 없네요."},
 {"user" : "사순위 카드는 뭐야?" ,"bot" : "분석중이라 알려드릴수가 없네요."}
-
+# {"user" : "오늘 날씨 알려줘" ,"bot" : "날씨를 알려드릴게요."}
 
 ]
 
@@ -537,7 +568,7 @@ for epoch in range(NUM_EPOCHS):
 
 # print(response(('안녕하세요'))) #질문이 '안녕하세요', 학습된 질문 목록중에 가장 높은 예측비율이 높은 질문의 응답을 출력한다.
 
-#서비스 제공한다. #플라스크
+# 서비스 제공한다. #플라스크
 while True:
     text=input('사용자:') #챗봇에게 전달할 내용 입력받기
     result=response(text) #입력받은 내용을 함수에 넣어 응답 예측을 한다
