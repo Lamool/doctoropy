@@ -54,9 +54,39 @@ def poke_each_skills(*kwargs):
 
     return result
 
+def poke_click(*kwargs):
+    result = ""
+
+    click_data = pd.read_csv("merged_data.csv", encoding="utf-8", index_col=0)
+    kr_name = click_data["한글이름"]
+
+    search_name = str(kwargs[0]).split(" ")
+    print(search_name)
+
+    for search in search_name :
+        for i , name in enumerate(kr_name) :
+            if name == search:
+                result += f"{kr_name.iloc[i]}의 클릭 수는 {click_data['click'].iloc[i]} "
+
+def poke_win(*kwargs):
+    result = ""
+
+    win_data = pd.read_csv("merged_data.csv", encoding="utf-8", index_col=0)
+    kr_name = win_data["한글이름"]
+
+    search_name = str(kwargs[0]).split(" ")
+    print(search_name)
+
+    for search in search_name:
+        for i, name in enumerate(kr_name):
+            if name == search:
+                result += f"{kr_name.iloc[i]}의 클릭 수는 {win_data['win'].iloc[i]} "
+
 response_functions = {
     0 : poke_info_search,
-    1 : poke_each_skills
+    1 : poke_each_skills,
+    2 : poke_click,
+    3 : poke_win
 }
 
 #데이터 수집 #
@@ -500,7 +530,19 @@ data = [
     {"user" : "너 생각에 제일 못생긴 포켓몬" ,"bot" : "저는 질뻐기 라고 생각합니다."},
     {"user" : "니 생각에 가장 못생긴 포켓몬" ,"bot" : "저는 질뻐기 라고 생각합니다."},
     {"user" : "니 생각에 못생긴 포켓몬" ,"bot" : "저는 질뻐기 라고 생각합니다."},
-    {"user" : "니 생각에 제일 못생긴 포켓몬" ,"bot" : "저는 질뻐기 라고 생각합니다."}
+    {"user" : "니 생각에 제일 못생긴 포켓몬" ,"bot" : "저는 질뻐기 라고 생각합니다."},
+    {"user" : "이상해씨 클릭 횟수" ,"bot" : "이상해씨 클릭 횟수는 15회 입니다."},
+    {"user" : "이상해씨 클릭 횟수 알려줘" ,"bot" : "이상해씨 클릭 횟수는 15회 입니다."},
+    {"user" : "이상해씨 클릭 횟수 출력해줘" ,"bot" : "이상해씨 클릭 횟수는 15회 입니다."},
+    {"user" : "이상해씨 클릭 수" ,"bot" : "이상해씨 클릭 횟수는 15회 입니다."},
+    {"user" : "이상해씨 클릭 수 알려줘", "bot": "이상해씨 클릭 횟수는 15회 입니다."},
+    {"user" : "팬텀 우승 횟수" ,"bot" : "팬텀 우승 횟수는 10회 입니다."},
+    {"user" : "팬텀 우승 횟수 알려줘", "bot": "팬텀 우승 횟수는 10회 입니다."},
+    {"user" : "팬텀 우승 횟수 가르쳐줘", "bot": "팬텀 우승 횟수는 10회 입니다."},
+    {"user" : "팬텀 우승 횟수 출력해줘", "bot": "팬텀 우승 횟수는 10회 입니다."},
+    {"user" : "팬텀 우승 수", "bot": "팬텀 우승 횟수는 10회 입니다."},
+    {"user" : "팬텀 우승 수 알려줘", "bot": "팬텀 우승 횟수는 10회 입니다."},
+    {"user" : "팬텀 우승 수 가르쳐줘", "bot": "팬텀 우승 횟수는 10회 입니다."}
 
 
 
@@ -833,6 +875,12 @@ def run_chatbot(question):
 
     if "기술" in question_preprocess :
         results += f"\n{response_functions[1](question_preprocess)}"
+
+    if "클릭" in question_preprocess :
+        results += f"\n{response_functions[2](question_preprocess)}"
+
+    if "우승" in question_preprocess :
+        results += f"\n{response_functions[3](question_preprocess)}"
 
     return results
 
