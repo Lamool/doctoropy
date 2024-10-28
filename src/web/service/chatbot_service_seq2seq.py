@@ -54,6 +54,38 @@ def poke_each_skills(*kwargs):
 
     return result
 
+def link_collection(*kwargs):
+    result = ""
+
+    search_name = str(kwargs[0]).split(" ")
+
+    for search in search_name:
+        if search == "게시판":
+            result += "localhost:8080/board/bprint"
+
+        elif search == "종족값":
+            result += "localhost:8080/base/stats/print"
+
+        elif search == "채팅":
+            result += "localhost:8080/chat"
+
+        elif search == "쇼핑":
+            result += "localhost:8080/product"
+
+        elif search == "투표":
+            result += "localhost:8080/rank/enter"
+
+        elif search == "포인트":
+            result += "localhost:8080/point/charge"
+
+        elif search == "장바구니":
+            result += "localhost:8080/cart"
+
+        elif search == "승률":
+            result += "localhost:8080/rate"
+
+    return result
+
 def poke_click(*kwargs):
     result = ""
 
@@ -86,7 +118,8 @@ response_functions = {
     0 : poke_info_search,
     1 : poke_each_skills,
     2 : poke_click,
-    3 : poke_win
+    3 : poke_win,
+    4 : link_collection
 }
 
 #데이터 수집 #
@@ -882,6 +915,8 @@ def run_chatbot(question):
     if "우승" in question_preprocess :
         results += f"\n{response_functions[3](question_preprocess)}"
 
+    if "싶어" or "링크" or "싶다" in question_preprocess:
+        results += f"\n{response_functions[4](question_preprocess)}"
     return results
 
 while True:
