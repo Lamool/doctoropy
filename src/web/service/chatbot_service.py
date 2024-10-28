@@ -18,6 +18,9 @@ from src.web.service.info_service import *
 from src.web.service.service import *
 
 from src.web.service.weather_service import *
+from flask import Flask, request
+
+from src.web.service.board_service import *
 
 
 
@@ -55,35 +58,32 @@ def poke_each_skills(*kwargs):
 
     return result
 
+# 날씨 함수
+def weather_predict(*kwargs):
+    from datetime import datetime
+    now = datetime.now()
+    year = now.year
+    month = now.month
+    date = now.day
+    hours = now.hour
+    minutes = now.minute
+    result = predict_weather(year,month,date,hours,minutes)
 
-# def predict_weather(year, month, date, hours, minutes):
-#     print('날씨 서비스를 불러오는 중...')
-#
-#     # 데이터 형식 변환 (리스트로 만들기)
-#     data = [(year, month, date, hours, minutes)]
-#
-#     # 데이터 프레임으로 변환
-#     input_data = pd.DataFrame(data, columns=['년', '월', '일', '시', '분'])
-#
-#     # 모델 훈련을 위한 가상의 코드
-#     lr = LinearRegression()
-#     # 모델 훈련 과정이 필요함 (train data가 있어야 함)
-#     # lr.fit(X_train, Y_train)  # X_train과 Y_train이 필요함
-#
-#     # 실제 날씨 예측해보기
-#     mpg_predict = lr.predict(input_data)
-#     print(mpg_predict)
-#
-#     # 예측된 값에서 기온과 강수량을 각각 분리
-#     predicted_temperature = int(mpg_predict[0][0])  # 기온을 정수로 변환
-#
-#     return f'현재 날씨는 {predicted_temperature}° 입니다.'
+    return f'인천 날씨는 { result } 입니다.'
 
+# 게시판 인기 키워드 함수
+# def popular_board(*kwargs):
+#
+#     result=count(data)
+#     return f'포켓몬 자유게시판의 최근 인기 키워드는 { result } 입니다.'
 
 
 response_functions = {
     0 : poke_info_search,
-    1 : poke_each_skills
+    1 : poke_each_skills,
+    5 : weather_predict,
+    # 6: popular_board
+
 }
 
 #데이터 수집 #
@@ -93,6 +93,8 @@ data = [
     {"user" : "가장 강한 포켓몬은 뭔가요?", "bot" : "지우입니다."},
     {"user" : "챗봇 이름은 뭐야?", "bot" :"오박사입니다."},
     {"user" : "넌 뭘 할수있어?", "bot" :"불가능한거빼고모두가능합니다."},
+    {"user" : "오늘 날씨 알려줘" ,"bot" : "날씨를 알려드릴게요."},
+    {"user" : "게시물 인기 키워드는 뭐야?" ,"bot" : "포켓몬 자유게시판의 현재 인기 키워드를 알려드릴게요."},
     {"user" : "여기는 무슨 사이트야?", "bot" : "포켓몬에관한모든정보를제공해주는웹사이트입니다."},
     {"user" : "고마워요", "bot": "천만에요! 더 필요한 것이 있으면 말씀해주세요."},
     {"user" : "관리자 아이디 알려줘","bot" : "개인정보는알려드릴수없습니다."},
@@ -544,7 +546,7 @@ okt=Okt()
 
 def preprocess(text):
     #1.한글과 띄어쓰기(\s)를 제외한 문자제거
-    result=re.sub(r'[^가-힣0-9\s]', '', text) #정규표현식 #일반적인 문자열 정규표현식
+    result=re.sub(r'[^가-힣\s]', '', text) #정규표현식 #일반적인 문자열 정규표현식
     #2. 형태소 분석
     result=okt.pos(result) ; print(result)
     #3. 명사와 동사와 형용사 외 제거 #형태소 분석기가 각 형태소들을 명칭하는 단어들 (pos)변수 존재한다.
@@ -599,7 +601,7 @@ early_stop = tf.keras.callbacks.EarlyStopping(monitor = "loss", patience = 2)
 #2. 컴파일
 model.compile(optimizer=tf.optimizers.Adam(learning_rate=0.001),loss='sparse_categorical_crossentropy',metrics=['accuracy'])
 
-NUM_EPOCHS = 1
+NUM_EPOCHS = 20
 
 #예측하기
 def response(message):
@@ -624,18 +626,32 @@ for epoch in range(NUM_EPOCHS):
     model.fit(input_sequences, output_sequences, callbacks=[early_stop, checkpoint] ,epochs=10)
 
 
-    # for idx in data["user"]:
-    #     question_inputs = idx
-    #     results = response(question_inputs)
+    for idx in data["user"]:
+        question_inputs = idx
+        results = response(question_inputs)
 
 
 # print(response(('안녕하세요'))) #질문이 '안녕하세요', 학습된 질문 목록중에 가장 높은 예측비율이 높은 질문의 응답을 출력한다.
 
-# #서비스 제공한다. #플라스크
-# while True:
-#     text=input('사용자:') #챗봇에게 전달할 내용 입력받기
-#     result=response(text) #입력받은 내용을 함수에 넣어 응답 예측을 한다
-#     print(f'챗봇:{result}') #예측한 응답 출력한다.
+
+import time
+
+#챗봇의 답변이 타자치는 것처럼 출력 함수
+def print_with_delay(text, delay=0.1):
+    for char in text:
+        print(char, end='', flush=True)
+        time.sleep(delay)
+    print()  # 마지막에 줄 바꿈
+
+while True:
+    text = input('사용자: ')  # 챗봇에게 전달할 내용 입력받기
+    result = response(text)  # 입력받은 내용을 함수에 넣어 응답 예측을 한다
+
+    # 챗봇의 응답을 한 글자씩 출력
+    print_with_delay(f'챗봇: {result}')  # 챗봇의 응답 출력
+
+
+
 
 
 

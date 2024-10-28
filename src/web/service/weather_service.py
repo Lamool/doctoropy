@@ -8,16 +8,16 @@ import json
 
 def predict_weather(year, month, date, hours, minutes):
     #데이터 읽기
-    df_2024=pd.read_csv('api/weather_forecast/2024incheon.csv',encoding='cp949')
-    df_2023=pd.read_csv('api/weather_forecast/2023incheon.csv',encoding='cp949')
-    df_2022=pd.read_csv('api/weather_forecast/2022incheon.csv',encoding='cp949')
-    df_2021=pd.read_csv('api/weather_forecast/2021incheon.csv',encoding='cp949')
-    df_2020=pd.read_csv('api/weather_forecast/2020incheon.csv',encoding='cp949')
-    df_2019=pd.read_csv('api/weather_forecast/2019incheon.csv',encoding='cp949')
-    df_2018=pd.read_csv('api/weather_forecast/2018incheon.csv',encoding='cp949')
-    df_2017=pd.read_csv('api/weather_forecast/2017incheon.csv',encoding='cp949')
-    df_2016=pd.read_csv('api/weather_forecast/2016incheon.csv',encoding='cp949')
-    df_2015=pd.read_csv('api/weather_forecast/2015incheon.csv',encoding='cp949')
+    df_2024=pd.read_csv('../api/weather_forecast/2024incheon.csv',encoding='cp949')
+    df_2023=pd.read_csv('../api/weather_forecast/2023incheon.csv',encoding='cp949')
+    df_2022=pd.read_csv('../api/weather_forecast/2022incheon.csv',encoding='cp949')
+    df_2021=pd.read_csv('../api/weather_forecast/2021incheon.csv',encoding='cp949')
+    df_2020=pd.read_csv('../api/weather_forecast/2020incheon.csv',encoding='cp949')
+    df_2019=pd.read_csv('../api/weather_forecast/2019incheon.csv',encoding='cp949')
+    df_2018=pd.read_csv('../api/weather_forecast/2018incheon.csv',encoding='cp949')
+    df_2017=pd.read_csv('../api/weather_forecast/2017incheon.csv',encoding='cp949')
+    df_2016=pd.read_csv('../api/weather_forecast/2016incheon.csv',encoding='cp949')
+    df_2015=pd.read_csv('../api/weather_forecast/2015incheon.csv',encoding='cp949')
     # print(df_2024)
     # print(df_2023)
     # print(df_2019)
@@ -81,7 +81,7 @@ def predict_weather(year, month, date, hours, minutes):
     X_test.reset_index(drop=True, inplace=True)
 
     X_test = pd.DataFrame(X_test, columns=X_train.columns)
-    print(X_test)
+    # print(X_test)
     # 모델 피팅 #선형 회귀 분석 : 모델 생성
     lr = LinearRegression()
     lr.fit(X_train, Y_train)
@@ -91,7 +91,7 @@ def predict_weather(year, month, date, hours, minutes):
 
     # X_test를 DataFrame에 맞춰서 예측하자.
     # numpy로 바꾸는 순간 열 형식/이름이 바뀔 수 있으니 주의!
-    print(Y_predict)
+    # print(Y_predict)
 
     # 정확도
     import numpy as np
@@ -109,7 +109,7 @@ def predict_weather(year, month, date, hours, minutes):
     input_data = pd.DataFrame(data, columns=['년', '월', '일', '시', '분'])
     # 실제 날씨 예측해보기
     mpg_predict = lr.predict(input_data)
-    print(mpg_predict)
+    # print(mpg_predict)
 
     # 예측된 값에서 기온과 강수량을 각각 분리
     predicted_temperature = int(mpg_predict[0][0])  # 기온을 정수로 변환
@@ -117,7 +117,7 @@ def predict_weather(year, month, date, hours, minutes):
 
     # 결과 출력
     print("예측된 기온:", predicted_temperature)
-    print("예측된 강수량:", predicted_rainfall)
+    # print("예측된 강수량:", predicted_rainfall)
 
     # 예측된 값을 DataFrame에 저장
     df_weather_predict = pd.DataFrame({
@@ -127,14 +127,14 @@ def predict_weather(year, month, date, hours, minutes):
 
     # csv 로 저장
     weather_predict = pd.DataFrame(df_weather_predict.items(), columns=['기온', '강수량'])
-    weather_predict.to_csv('./service/weather_predict.csv', index=False)
-    print(weather_predict)
+    weather_predict.to_csv('../service/weather_predict.csv', index=False)
+    # print(weather_predict)
 
     result = [{'기온': predicted_temperature, '강수량': predicted_rainfall} ]
     json_weather_predict = df_weather_predict.to_json(orient='records', force_ascii=False)
     # json 형식으로 변환
     result = json.loads(json_weather_predict)
-    print(result)
+    # print(result)
 
     return result
 
