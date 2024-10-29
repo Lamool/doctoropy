@@ -78,7 +78,7 @@ def first_city_pred(gen, age):
 
     result = model.predict([[gen, age]])
 
-    return round(result)
+    return list(result)
 
 
 def second_city_model():
@@ -151,7 +151,7 @@ def second_city_pred(gen, age):
 
     result = model.predict([[gen, age]])
 
-    return round(result)
+    return list(result)
 
 
 def third_city_model():
@@ -225,4 +225,4 @@ def third_city_pred(gen, age):
 
     result = model.predict([[gen, age]])
 
-    return round(result)
+    return list(result)

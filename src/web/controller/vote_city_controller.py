@@ -75,6 +75,7 @@ def first_pred():
     print(age)
 
     result = first_city_pred(gen, age)
+    print(result)
 
     return result
 
@@ -87,6 +88,7 @@ def second_pred():
     print(age)
 
     result = second_city_pred(gen, age)
+    print(result)
 
     return result
 
@@ -99,6 +101,7 @@ def third_pred():
     print(age)
 
     result = third_city_pred(gen, age)
+    print(result)
 
     return result
 
