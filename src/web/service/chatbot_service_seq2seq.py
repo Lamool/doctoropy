@@ -118,9 +118,7 @@ def poke_win(*kwargs):
     for search in search_name:
         for i, name in enumerate(kr_name):
             if name == search:
-                print(i)
-                print(search)
-                result += f"{kr_name.iloc[i]}의 우승 횟수는 {win_data['win'].iloc[i]}"
+                result += f"{kr_name.iloc[i]}의 우승 수는 {win_data['win'].iloc[i]} "
 
     return result
 
