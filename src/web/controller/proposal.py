@@ -8,7 +8,6 @@ from flask import request
 
 from src.web.service.proposal import *
 from flask import jsonify
-from src.web.app import *
 
 #가져오기
 @app.route('/model', methods=["GET"])

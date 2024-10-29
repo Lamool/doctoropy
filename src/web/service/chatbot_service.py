@@ -659,12 +659,12 @@ def print_with_delay(text, delay=0.1):
         time.sleep(delay)
     print()  # 마지막에 줄 바꿈
 
-while True:
-    text = input('사용자: ')  # 챗봇에게 전달할 내용 입력받기
-    result = response(text)  # 입력받은 내용을 함수에 넣어 응답 예측을 한다
-
-    # 챗봇의 응답을 한 글자씩 출력
-    print_with_delay(f'챗봇: {result}')  # 챗봇의 응답 출력
+# while True:
+#     text = input('사용자: ')  # 챗봇에게 전달할 내용 입력받기
+#     result = response(text)  # 입력받은 내용을 함수에 넣어 응답 예측을 한다
+#
+#     # 챗봇의 응답을 한 글자씩 출력
+#     print_with_delay(f'챗봇: {result}')  # 챗봇의 응답 출력
 
 
 
