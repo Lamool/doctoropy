@@ -8,7 +8,7 @@ from src.web.model.rate_class import *
 
 # poke_data = pd.read_csv("datapokemon.csv", encoding="utf-8", index_col=0)
 # poke_skill_data = pd.read_csv("skilldata.csv", encoding="utf-8",index_col=0)
-# # print(poke_data)
+# # print(poke_data)f
 # new_poke_skill_data = poke_skill_data.fillna(0)
 # # print(new_poke_skill_data)
 # # print(poke_data.iloc[1000])

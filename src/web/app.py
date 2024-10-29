@@ -9,7 +9,7 @@ from flask_cors import CORS
 CORS(app)
 
 # 모듈 가져오기
-from controller.controller import *
+from src.web.controller.controller import *
 from src.web.service.rankservice import *
 from src.web.controller.info_controller import *
 from src.web.controller.base_stats_controller import *
@@ -20,8 +20,11 @@ from src.web.controller.proposal import *
 from src.web.controller.my_pokemon_controller import *
 from src.web.controller.weather_controller import *
 from src.web.controller.chatbot_controller import *
+from src.web.controller.vote_city_controller import *
 from src.web.api.ranking_open import *
+
 # 3. 플라스크 웹 실행
 if __name__ == "__main__":
-    app.run(host='0.0.0.0' , debug=True)
+    app.run(host='0.0.0.0' , debug=True , use_reloader=False )
+
 

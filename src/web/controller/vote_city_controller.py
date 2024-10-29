@@ -1,5 +1,6 @@
 from src.web.app import *
 from src.web.service.vote_city_service import *
+from src.web.service.vote_city_model_service import *
 
 @app.route("/vote/record_first", methods = ["POST"])
 def first_record():
@@ -70,6 +71,8 @@ def third_record():
 def first_pred():
     gen = request.args["gen"]
     age = request.args["age"]
+    print(gen)
+    print(age)
 
     result = first_city_pred(gen, age)
 
@@ -80,6 +83,8 @@ def first_pred():
 def second_pred():
     gen = request.args["gen"]
     age = request.args["age"]
+    print(gen)
+    print(age)
 
     result = second_city_pred(gen, age)
 
@@ -90,6 +95,8 @@ def second_pred():
 def third_pred():
     gen = request.args["gen"]
     age = request.args["age"]
+    print(gen)
+    print(age)
 
     result = third_city_pred(gen, age)
 
