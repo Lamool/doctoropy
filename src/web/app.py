@@ -23,5 +23,5 @@ from src.web.controller.chatbot_controller import *
 from src.web.api.ranking_open import *
 # 3. 플라스크 웹 실행
 if __name__ == "__main__":
-    app.run(host='0.0.0.0' , debug=True)
+    app.run(host='0.0.0.0' , debug=True, use_reloader=False)
 

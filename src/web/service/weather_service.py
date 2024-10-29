@@ -8,16 +8,16 @@ import json
 
 def predict_weather(year, month, date, hours, minutes):
     #데이터 읽기
-    df_2024=pd.read_csv('../api/weather_forecast/2024incheon.csv',encoding='cp949')
-    df_2023=pd.read_csv('../api/weather_forecast/2023incheon.csv',encoding='cp949')
-    df_2022=pd.read_csv('../api/weather_forecast/2022incheon.csv',encoding='cp949')
-    df_2021=pd.read_csv('../api/weather_forecast/2021incheon.csv',encoding='cp949')
-    df_2020=pd.read_csv('../api/weather_forecast/2020incheon.csv',encoding='cp949')
-    df_2019=pd.read_csv('../api/weather_forecast/2019incheon.csv',encoding='cp949')
-    df_2018=pd.read_csv('../api/weather_forecast/2018incheon.csv',encoding='cp949')
-    df_2017=pd.read_csv('../api/weather_forecast/2017incheon.csv',encoding='cp949')
-    df_2016=pd.read_csv('../api/weather_forecast/2016incheon.csv',encoding='cp949')
-    df_2015=pd.read_csv('../api/weather_forecast/2015incheon.csv',encoding='cp949')
+    df_2024=pd.read_csv('./api/weather_forecast/2024incheon.csv',encoding='cp949')
+    df_2023=pd.read_csv('./api/weather_forecast/2023incheon.csv',encoding='cp949')
+    df_2022=pd.read_csv('./api/weather_forecast/2022incheon.csv',encoding='cp949')
+    df_2021=pd.read_csv('./api/weather_forecast/2021incheon.csv',encoding='cp949')
+    df_2020=pd.read_csv('./api/weather_forecast/2020incheon.csv',encoding='cp949')
+    df_2019=pd.read_csv('./api/weather_forecast/2019incheon.csv',encoding='cp949')
+    df_2018=pd.read_csv('./api/weather_forecast/2018incheon.csv',encoding='cp949')
+    df_2017=pd.read_csv('./api/weather_forecast/2017incheon.csv',encoding='cp949')
+    df_2016=pd.read_csv('./api/weather_forecast/2016incheon.csv',encoding='cp949')
+    df_2015=pd.read_csv('./api/weather_forecast/2015incheon.csv',encoding='cp949')
     # print(df_2024)
     # print(df_2023)
     # print(df_2019)
@@ -127,7 +127,7 @@ def predict_weather(year, month, date, hours, minutes):
 
     # csv 로 저장
     weather_predict = pd.DataFrame(df_weather_predict.items(), columns=['기온', '강수량'])
-    weather_predict.to_csv('../service/weather_predict.csv', index=False)
+    weather_predict.to_csv('./service/weather_predict.csv', index=False)
     # print(weather_predict)
 
     result = [{'기온': predicted_temperature, '강수량': predicted_rainfall} ]

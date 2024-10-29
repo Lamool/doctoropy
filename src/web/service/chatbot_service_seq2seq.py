@@ -17,10 +17,12 @@ import  re
 from src.web.service.info_service import *
 from src.web.service.service import *
 
+from src.web.service.weather_service import *
+from src.web.service.board_service import *
 
 
 def poke_info_search(*kwargs):
-    poke_data = pd.read_csv("datapokemon.csv", encoding="utf-8", index_col=0)
+    poke_data = pd.read_csv("./service/datapokemon.csv", encoding="utf-8", index_col=0)
     kr_name = poke_data["한글이름"]
     result = ""
 
@@ -41,7 +43,7 @@ def poke_info_search(*kwargs):
 def poke_each_skills(*kwargs):
     result = ""
 
-    skill_data = pd.read_csv("new_poke_each_skill_data.csv", encoding="utf-8", index_col=0)
+    skill_data = pd.read_csv("./service/new_poke_each_skill_data.csv", encoding="utf-8", index_col=0)
     kr_name = skill_data["포켓몬"]
 
     search_name = str(kwargs[0]).split(" ")  # 첫 번째 인자를 문자열로 변환합니다.
@@ -89,7 +91,7 @@ def link_collection(*kwargs):
 def poke_click(*kwargs):
     result = ""
 
-    click_data = pd.read_csv("merged_data.csv", encoding="utf-8", index_col=0)
+    click_data = pd.read_csv("./service/merged_data.csv", encoding="utf-8", index_col=0)
     kr_name = click_data["한글이름"]
 
     search_name = str(kwargs[0]).split(" ")
@@ -103,7 +105,7 @@ def poke_click(*kwargs):
 def poke_win(*kwargs):
     result = ""
 
-    win_data = pd.read_csv("merged_data.csv", encoding="utf-8", index_col=0)
+    win_data = pd.read_csv("./service/merged_data.csv", encoding="utf-8", index_col=0)
     kr_name = win_data["한글이름"]
 
     search_name = str(kwargs[0]).split(" ")
@@ -114,21 +116,85 @@ def poke_win(*kwargs):
             if name == search:
                 result += f"{kr_name.iloc[i]}의 클릭 수는 {win_data['win'].iloc[i]} "
 
+# 날씨 함수
+def weather_predict(*kwargs):
+    from datetime import datetime
+    now = datetime.now()
+    year = now.year
+    month = now.month
+    date = now.day
+    hours = now.hour
+    minutes = now.minute
+    result = predict_weather(year,month,date,hours,minutes)
+
+    return f'인천 날씨는 { result } 입니다.'
+
+#게시판 인기 키워드 함수
+# def popular_board(*kwargs):
+#     df = pd.DataFrame(data)
+#     combined_text = ''
+#     for item in data:
+#         if 'btitle' in item and 'bcontent' in item:
+#             cleaned_title = re.sub(r'[^\w]', '', item['btitle'])
+#             cleaned_content = re.sub(r'[^\w]', '', item['bcontent'])
+#             combined_text += f"{cleaned_title} {cleaned_content} "
+#     okt = Okt()
+#     words = okt.nouns(combined_text)
+#     # 단어 빈도 분석
+#     wordCount = Counter(words)
+#     # 상위 10개 단어와 그 빈도를 딕셔너리로 저장
+#     word_count = {}
+#     for word, count in wordCount.most_common(10):
+#         if len(word) > 1:
+#             word_count[word] = count
+#     # 단어만 리스트 형태로 반환
+#     result = f'현재 인기 키워드는' ', '.join(word_count.keys())
+#     print(result)
+#     return result
+
+
 response_functions = {
     0 : poke_info_search,
     1 : poke_each_skills,
     2 : poke_click,
     3 : poke_win,
-    4 : link_collection
+    4 : link_collection,
+    5 : weather_predict,
+    # 17 : popular_board
 }
 
 #데이터 수집 #
 data = [
-    {"user" : "피카츄 정보 알려줘", "bot" : "포켓몬 정보를 알려드리겠습니다."},
-    {"user" : "피카츄 기술 알려줘", "bot" : "포켓몬이 가질 수 있는 기술을 알려드리겠습니다."},
-    {"user" : "가장 강한 포켓몬은 뭔가요?", "bot" : "지우입니다."},
-    {"user" : "챗봇 이름은 뭐야?", "bot" :"오박사입니다."},
-    {"user" : "넌 뭘 할수있어?", "bot" :"불가능한거빼고모두가능합니다."},
+    {"user" : "피카츄 정보 알려줘", "bot": "포켓몬 정보를 알려드리겠습니다."},
+    {"user" : "피카츄 기술 알려줘", "bot": "포켓몬이 가질 수 있는 기술을 알려드리겠습니다."},
+    {"user" : "가장 강한 포켓몬은 뭔가요?", "bot": "지우입니다."},
+    {"user" : "챗봇 이름은 뭐야?", "bot": "오박사입니다."},
+    {"user" : "넌 뭘 할수있어?", "bot": "불가능한거빼고모두가능합니다."},
+    {"user" : "오늘 날씨 알려줘", "bot": "오늘 날씨의 온도와 강수량을 알려드리겠습니다."},
+    {"user" : "오늘 날씨가 어떤가요?", "bot": "오늘 날씨의 온도와 강수량을 알려드리겠습니다."},
+    {"user" : "오늘 기온이 어떻게 되나요?", "bot": "오늘 날씨의 온도와 강수량을 알려드리겠습니다."},
+    {"user" : "오늘 외출하기 좋은 날씨인가요?", "bot": "오늘 날씨의 온도와 강수량을 알려드리겠습니다."},
+    {"user" : "오늘 기상 정보 좀 알려줘", "bot": "오늘 날씨의 온도와 강수량을 알려드리겠습니다."},
+    {"user" : "오늘 하늘 상태는 어떤가요?", "bot": "오늘 날씨의 온도와 강수량을 알려드리겠습니다."},
+    {"user" : "오늘 날씨는 어떤지 궁금해요", "bot": "오늘 날씨의 온도와 강수량을 알려드리겠습니다."},
+    {"user" : "오늘 날씨가 따뜻한가요?", "bot": "오늘 날씨의 온도와 강수량을 알려드리겠습니다."},
+    {"user" : "오늘 날씨에 대한 업데이트 부탁해", "bot": "오늘 날씨의 온도와 강수량을 알려드리겠습니다."},
+    {"user" : "오늘 날씨는 뭔지 알고싶어", "bot": "오늘 날씨의 온도와 강수량을 알려드리겠습니다."},
+    {"user" : "오늘 외출 시 날씨가 어떤지 알려줘", "bot": "오늘 날씨의 온도와 강수량을 알려드리겠습니다."},
+    {"user" : "오늘 날씨 상황을 알려줘", "bot": "오늘 날씨의 온도와 강수량을 알려드리겠습니다."},
+    {"user" : "게시판의 인기 키워드는 뭐야?", "bot": "오늘 게시판의 현재 인기 키워드를 알려드리겠습니다."},
+    {"user": "게시판에서 가장 많이 언급되는 키워드는 뭐야?", "bot": "오늘 게시판의 현재 인기 키워드를 알려드리겠습니다."},
+    {"user": "현재 인기 있는 게시글의 키워드를 알려줘", "bot": "오늘 게시판의 현재 인기 키워드를 알려드리겠습니다."},
+    {"user": "요즘 자주 나오는 키워드가 뭐야?", "bot": "오늘 게시판의 현재 인기 키워드를 알려드리겠습니다."},
+    {"user": "게시판에서 핫한 주제가 뭐야?", "bot": "오늘 게시판의 현재 인기 키워드를 알려드리겠습니다."},
+    {"user": "최근에 주목받고 있는 키워드가 있나요?", "bot": "오늘 게시판의 현재 인기 키워드를 알려드리겠습니다."},
+    {"user": "게시판의 트렌디한 키워드를 알려줘.", "bot": "오늘 게시판의 현재 인기 키워드를 알려드리겠습니다."},
+    {"user": "지금 인기 있는 키워드 목록을 보여줘.", "bot": "오늘 게시판의 현재 인기 키워드를 알려드리겠습니다."},
+    {"user": "요즘 게시판에서 어떤 키워드가 떠오르고 있나요?", "bot": "오늘 게시판의 현재 인기 키워드를 알려드리겠습니다."},
+    {"user": "최근 게시물의 인기 키워드는 무엇인가요?", "bot": "오늘 게시판의 현재 인기 키워드를 알려드리겠습니다."},
+    {"user": "현재 게시판에서 어떤 주제가 가장 많이 논의되고 있나요?", "bot": "오늘 게시판의 현재 인기 키워드를 알려드리겠습니다."},
+    {"user": "게시판의 인기 있는 키워드 트렌드는 뭐야?", "bot": "오늘 게시판의 현재 인기 키워드를 알려드리겠습니다."},
+    {"user": "지금 게시판에서 화제가 되고 있는 키워드는 뭐야?", "bot": "오늘 게시판의 현재 인기 키워드를 알려드리겠습니다."},
     {"user" : "여기는 무슨 사이트야?", "bot" : "포켓몬에관한모든정보를제공해주는웹사이트입니다."},
     {"user" : "고마워요", "bot": "천만에요! 더 필요한 것이 있으면 말씀해주세요."},
     {"user" : "관리자 아이디 알려줘","bot" : "개인정보는알려드릴수없습니다."},
@@ -961,12 +1027,18 @@ def run_chatbot(question):
     if "우승" in question_preprocess :
         results += f"\n{response_functions[3](question_preprocess)}"
 
+    if "날씨" in question_preprocess:
+        results += f"\n{response_functions[5](question_preprocess)}"
+
+    if "키워드" in question_preprocess:
+        results += f"\n{response_functions[18](question_preprocess)}"
+
     if "싶어" or "링크" or "싶다" in question_preprocess:
         results += f"\n{response_functions[4](question_preprocess)}"
     return results
 
-while True:
-    user_input = input("<<말을 걸어 보세요!\n")
-    if user_input == "q":
-        break
-    print(f">> 챗봇 응답 : {run_chatbot(user_input)}")
+# while True:
+#     user_input = input("<<말을 걸어 보세요!\n")
+#     if user_input == "q":
+#         break
+#     print(f">> 챗봇 응답 : {run_chatbot(user_input)}")

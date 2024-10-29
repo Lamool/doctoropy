@@ -17,7 +17,7 @@ import  re
 from src.web.service.info_service import *
 from src.web.service.service import *
 
-from src.web.service.weather_service import *
+# from src.web.service.weather_service import *
 from flask import Flask, request
 
 from src.web.service.board_service import *
@@ -59,30 +59,47 @@ def poke_each_skills(*kwargs):
     return result
 
 # 날씨 함수
-def weather_predict(*kwargs):
-    from datetime import datetime
-    now = datetime.now()
-    year = now.year
-    month = now.month
-    date = now.day
-    hours = now.hour
-    minutes = now.minute
-    result = predict_weather(year,month,date,hours,minutes)
-
-    return f'인천 날씨는 { result } 입니다.'
+# def weather_predict(*kwargs):
+#     from datetime import datetime
+#     now = datetime.now()
+#     year = now.year
+#     month = now.month
+#     date = now.day
+#     hours = now.hour
+#     minutes = now.minute
+#     result = predict_weather(year,month,date,hours,minutes)
+#
+#     return f'인천 날씨는 { result } 입니다.'
 
 # 게시판 인기 키워드 함수
-# def popular_board(*kwargs):
-#
-#     result=count(data)
-#     return f'포켓몬 자유게시판의 최근 인기 키워드는 { result } 입니다.'
+def popular_board(*kwargs):
+    df = pd.DataFrame(data)
+    combined_text = ''
+    for item in data:
+        if 'btitle' in item and 'bcontent' in item:
+            cleaned_title = re.sub(r'[^\w]', '', item['btitle'])
+            cleaned_content = re.sub(r'[^\w]', '', item['bcontent'])
+            combined_text += f"{cleaned_title} {cleaned_content} "
+    okt = Okt()
+    words = okt.nouns(combined_text)
+    # 단어 빈도 분석
+    wordCount = Counter(words)
+    # 상위 10개 단어와 그 빈도를 딕셔너리로 저장
+    word_count = {}
+    for word, count in wordCount.most_common(10):
+        if len(word) > 1:
+            word_count[word] = count
+    # 단어만 리스트 형태로 반환
+    result = f'현재 인기 키워드는' ', '.join(word_count.keys())
+    print(result)
+    return result
 
 
 response_functions = {
     0 : poke_info_search,
     1 : poke_each_skills,
-    5 : weather_predict,
-    # 6: popular_board
+    # 5 : weather_predict,
+    6: popular_board
 
 }
 
@@ -530,7 +547,6 @@ data = [
 {"user" : "니 생각에 가장 못생긴 포켓몬" ,"bot" : "저는 질뻐기 라고 생각합니다."},
 {"user" : "니 생각에 못생긴 포켓몬" ,"bot" : "저는 질뻐기 라고 생각합니다."},
 {"user" : "니 생각에 제일 못생긴 포켓몬" ,"bot" : "저는 질뻐기 라고 생각합니다."}
-# {"user" : "오늘 날씨 알려줘" ,"bot" : "날씨를 알려드릴게요."}
 
 ]
 
