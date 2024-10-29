@@ -2,17 +2,17 @@ import numpy as np
 import pandas as pd
 import tensorflow as tf
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import  Embedding, LSTM, Dense, Bidirectional, Dropout, Attention
+from tensorflow.keras.layers import Embedding, LSTM, Dense, Bidirectional, Dropout, Attention
 from tensorflow.keras.models import Model
 from tensorflow.keras.callbacks import ModelCheckpoint
 
 from tensorflow.keras.preprocessing.text import Tokenizer
-from tensorflow.keras.preprocessing.sequence import  pad_sequences
+from tensorflow.keras.preprocessing.sequence import pad_sequences
 
 import warnings
 
-from konlpy.tag import  Okt
-import  re
+from konlpy.tag import Okt
+import re
 
 from src.web.service.info_service import *
 from src.web.service.service import *
@@ -53,38 +53,6 @@ def poke_each_skills(*kwargs):
         for i, name in enumerate(kr_name):
             if name == search:
                 result += f"{skill_data['스킬이름'].iloc[i]} : {skill_data['타입'].iloc[i]} 타입, 위력 {skill_data['위력'].iloc[i]}의 기술입니다.\n"
-
-    return result
-
-def link_collection(*kwargs):
-    result = ""
-
-    search_name = str(kwargs[0]).split(" ")
-
-    for search in search_name:
-        if search == "게시판":
-            result += "localhost:8080/board/bprint"
-
-        elif search == "종족값":
-            result += "localhost:8080/base/stats/print"
-
-        elif search == "채팅":
-            result += "localhost:8080/chat"
-
-        elif search == "쇼핑":
-            result += "localhost:8080/product"
-
-        elif search == "투표":
-            result += "localhost:8080/rank/enter"
-
-        elif search == "포인트":
-            result += "localhost:8080/point/charge"
-
-        elif search == "장바구니":
-            result += "localhost:8080/cart"
-
-        elif search == "승률":
-            result += "localhost:8080/rate"
 
     return result
 
