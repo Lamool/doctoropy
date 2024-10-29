@@ -25,7 +25,7 @@ from src.web.service.board_service import *
 
 
 def poke_info_search(*kwargs):
-    poke_data = pd.read_csv("datapokemon.csv", encoding="utf-8", index_col=0)
+    poke_data = pd.read_csv("./service/datapokemon.csv", encoding="utf-8", index_col=0)
     kr_name = poke_data["한글이름"]
     en_name = poke_data["영어이름"]  # en_name을 초기화합니다.
     search_en_name = ""
@@ -45,7 +45,7 @@ def poke_info_search(*kwargs):
 
 def poke_each_skills(*kwargs):
     result = []
-    poke_data = pd.read_csv("datapokemon.csv", encoding="utf-8", index_col=0)
+    poke_data = pd.read_csv("./service/datapokemon.csv", encoding="utf-8", index_col=0)
     kr_name = poke_data["한글이름"]
 
     search_name = str(kwargs[0]).split(" ")  # 첫 번째 인자를 문자열로 변환합니다.
@@ -530,8 +530,7 @@ data = [
 {"user" : "니 생각에 가장 못생긴 포켓몬" ,"bot" : "저는 질뻐기 라고 생각합니다."},
 {"user" : "니 생각에 못생긴 포켓몬" ,"bot" : "저는 질뻐기 라고 생각합니다."},
 {"user" : "니 생각에 제일 못생긴 포켓몬" ,"bot" : "저는 질뻐기 라고 생각합니다."}
-
-
+# {"user" : "오늘 날씨 알려줘" ,"bot" : "날씨를 알려드릴게요."}
 
 ]
 
@@ -547,7 +546,7 @@ okt=Okt()
 
 def preprocess(text):
     #1.한글과 띄어쓰기(\s)를 제외한 문자제거
-    result=re.sub(r'[^가-힣0-9\s]', '', text) #정규표현식 #일반적인 문자열 정규표현식
+    result=re.sub(r'[^가-힣\s]', '', text) #정규표현식 #일반적인 문자열 정규표현식
     #2. 형태소 분석
     result=okt.pos(result) ; print(result)
     #3. 명사와 동사와 형용사 외 제거 #형태소 분석기가 각 형태소들을 명칭하는 단어들 (pos)변수 존재한다.
@@ -634,7 +633,6 @@ for epoch in range(NUM_EPOCHS):
 
 # print(response(('안녕하세요'))) #질문이 '안녕하세요', 학습된 질문 목록중에 가장 높은 예측비율이 높은 질문의 응답을 출력한다.
 
-# 서비스 제공한다. #플라스크
 
 import time
 
