@@ -126,18 +126,30 @@ def poke_win(*kwargs):
 
 # 날씨 함수
 def weather_predict(*kwargs):
-    from datetime import datetime
-    now = datetime.now()
-    year = now.year
-    month = now.month
-    date = now.day
-    hours = now.hour
-    minutes = now.minute
-    result = predict_weather(year,month,date,hours,minutes)
+    # from datetime import datetime
+    # now = datetime.now()
+    # year = now.year
+    # month = now.month
+    # date = now.day
+    # hours = now.hour
+    # minutes = now.minute
+    # result = predict_weather(year,month,date,hours,minutes)
 
-    return f'인천 날씨는 { result } 입니다.'
+    # 이미 읽은 데이터프레임 사용
+    weather_df = pd.read_csv('./service/weather_predict.csv')
 
-#게시판 인기 키워드 함수
+    # 기온과 강수량 추출
+    current_temperature = weather_df['기온'].iloc[0]  # 기온
+    #iloc:  특정 행과 열을 선택할 때 사용하는 인덱싱 메서드
+
+    rainfall = weather_df['강수량'].iloc[0]  # 강수량
+
+    # 결과 문자열 생성
+    result = f"기온은 {current_temperature}°C, 강수량은 {rainfall} mm입니다."
+
+    return result
+
+# 게시판 인기 키워드 함수
 # def popular_board(*kwargs):
 #     df = pd.DataFrame(data)
 #     combined_text = ''
@@ -156,7 +168,7 @@ def weather_predict(*kwargs):
 #         if len(word) > 1:
 #             word_count[word] = count
 #     # 단어만 리스트 형태로 반환
-#     result = f'현재 인기 키워드는' ', '.join(word_count.keys())
+#     result = f'현재 인기 키워드는' ' , '.join(word_count.keys())
 #     print(result)
 #     return result
 
