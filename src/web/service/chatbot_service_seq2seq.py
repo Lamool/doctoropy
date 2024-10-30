@@ -144,7 +144,7 @@ response_functions = {
     1 : poke_each_skills,
     2 : poke_click,
     3 : poke_win,
-    4 : link_collection,
+    # 4 : link_collection,
     5 : weather_predict,
     # 17 : popular_board
 }
