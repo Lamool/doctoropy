@@ -13,7 +13,6 @@ from src.web.app import app ,request
 @app.route("/chatbot/seq2seq", methods = ["GET"])
 def chat_bot_seq2seq():
     text = request.args.get("text")
-    print(text)
     result = run_chatbot(text)
     print(result)
 
